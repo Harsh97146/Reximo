@@ -1,4 +1,4 @@
-import FaqSection from "@/app/components/FaqSection";
+import FaqSection from "./../../components/FaqSection";
 import React from "react";
 
 const FaqPage = () => {

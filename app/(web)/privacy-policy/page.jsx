@@ -1,4 +1,4 @@
-import PrivacyPolicy from "@/app/components/PrivacyPolicy";
+import PrivacyPolicy from "./../../components/PrivacyPolicy";
 import React from "react";
 
 const PrivacyPolicyPage = () => {

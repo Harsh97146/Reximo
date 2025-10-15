@@ -29,7 +29,14 @@ export default function EditBlog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    Object.entries(blog).forEach(([key, value]) => data.append(key, value));
+    Object.entries(blog).forEach(([key, value]) => {
+      // Ensure the value is string or Blob
+      if (value instanceof Blob) {
+        data.append(key, value); // for file inputs
+      } else if (value !== undefined && value !== null) {
+        data.append(key, String(value)); // convert everything else to string
+      }
+    });
 
     await fetch(`http://localhost:3001/api/blogs/${id}`, {
       method: "PUT",

@@ -1,4 +1,4 @@
-import BrochureSection from "@/app/components/BrochureSection";
+import BrochureSection from "./../../components/BrochureSection";
 
 const BrochurePage = () => {
   return (

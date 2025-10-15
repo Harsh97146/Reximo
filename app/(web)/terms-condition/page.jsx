@@ -1,4 +1,4 @@
-import TermsCondition from "@/app/components/TermsCondition";
+import TermsCondition from "./../../components/TermsCondition";
 import React from "react";
 
 const TermsConditionPage = () => {
