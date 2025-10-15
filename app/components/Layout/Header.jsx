@@ -1,215 +1,99 @@
 "use client";
+
 import Link from "next/link";
-import Image from "next/image";
-import { useState, useMemo, useRef, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { fallbackPages, navLinks } from "./helper";
-import { FaBars, FaRegCalendarAlt, FaTimes } from "react-icons/fa";
-import useIsMobile from "./../../hooks/useIsMobile";
-import { formatDate } from "./../../utils/date";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import CommonButton from "../ul/Button";
 
-const Header = ({ image, imageAlt, title, date }) => {
-  const pathname = usePathname();
-  const isMobile = useIsMobile();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const currentPage = useMemo(() => {
-    return (
-      navLinks.find((link) => link.href === pathname) || fallbackPages[pathname]
-    );
-  }, [pathname]);
-
-  const pageTitle = title || currentPage?.title || "";
-  const bgImage = currentPage?.bgImage || "/img/home.png";
-  const bgVideo = isMobile
-    ? currentPage?.bgMobileVideo || currentPage?.bgVideo || null
-    : currentPage?.bgVideo || null;
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenuOpen(false);
-      }
-    };
-
-    if (menuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuOpen]);
-
-  useEffect(() => {
-    if (bgVideo) {
-      window.scrollTo({ top: 0 });
-    }
-  }, [bgVideo]);
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Products", href: "/products" },
+    { label: "Contact Us", href: "/contact" },
+  ];
 
   return (
-    <header
-      className={`relative w-full ${
-        bgVideo ? "h-screen" : "h-[60vh]"
-      } overflow-hidden`}
-    >
-      <div className="absolute inset-0">
-        {bgVideo ? (
-          <>
-            <video
-              src={bgVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="object-cover w-full h-full"
-            />
-            <div className="absolute inset-0 bg-black/40" />
-          </>
-        ) : (
-          <>
-            <Image
-              src={image || bgImage}
-              alt={imageAlt || pageTitle || "Header Background"}
-              fill
-              priority
-              className="object-cover w-full"
-            />
-            <div className="absolute inset-0 bg-black/40" />
-          </>
-        )}
-      </div>
-
-      {/* Navbar */}
-      <nav className="absolute top-0 left-0 z-30 w-full px-4 sm:px-6">
-        {/* Desktop/Tablet Layout */}
-        <div className="hidden md:flex items-center justify-between w-full px-2 py-2 lg:px-10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-[0_4px_10px_0_rgba(0,0,0,0.10)] sm:py-4 py-3">
+      <div className="ct-container">
+        <div className="flex items-center justify-between ">
           {/* Logo */}
-          <Link href="/" passHref>
-            <Image
-              src="/img/logo.png"
-              alt="Logo"
-              width={135}
-              height={135}
-              className="z-40 cursor-pointer"
-            />
-          </Link>
-
-          {/* Centered Nav */}
-          <ul className="flex justify-center flex-1 space-x-3 lg:space-x-6 text-white font-medium ml-10">
-            {navLinks.map(({ label, href }) => {
-              const isActive = pathname === href;
-              return (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className={`transition text-sm lg:text-base whitespace-nowrap px-2 ${
-                      isActive
-                        ? "font-bold text-brand-red"
-                        : "hover:text-brand-red"
-                    }`}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Brochure Button */}
-          <div className="ml-auto">
-            <Link
-              href="/brochure"
-              className="bg-brand-red hover:bg-brand-red/90 text-white px-5 py-2 rounded-full transition"
-            >
-              Brochure
-            </Link>
-          </div>
-        </div>
-
-        {/* Mobile View */}
-        <div className="md:hidden relative z-50 flex justify-between items-center py-2">
-          <Link
-            href="/"
-            onClick={() => {
-              setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }, 50);
-            }}
-          >
-            <Image
-              src="/img/logo.png"
-              alt="Logo"
-              width={135}
-              height={135}
-              className="z-40 cursor-pointer"
-            />
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-white"
-            >
-              {menuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
-            </button>
-            <Link
-              href="/brochure"
-              className="bg-brand-red text-white px-4 py-2 rounded-full text-sm font-medium"
-            >
-              Brochure
-            </Link>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown Menu */}
-        {menuOpen && (
-          <div
-            ref={menuRef}
-            className="absolute top-full left-0 w-full bg-brand-red text-white text-sm font-medium flex flex-col md:hidden z-20 shadow-lg"
-          >
-            {navLinks.map(({ label, href }) => {
-              const isActive = pathname === href;
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                  className={`px-6 py-4 ${
-                    isActive ? "bg-black text-white" : "bg-brand-red/90"
-                  }`}
-                >
-                  {label}
-                </Link>
-              );
-            })}
-          </div>
-        )}
-      </nav>
-
-      <div className="absolute inset-0 z-10 flex items-end justify-center mb-20 text-center px-4">
-        <div>
-          <h1 className="text-white text-2xl md:text-4xl font-semibold leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            {Array.isArray(pageTitle)
-              ? pageTitle.map((line, idx) => (
-                  <span key={idx}>
-                    {line}
-                    {idx !== pageTitle.length - 1 && <br />}
-                  </span>
-                ))
-              : pageTitle}
-          </h1>
-          {date && (
-            <div className="flex justify-center items-center gap-2 mt-3 text-white text-sm drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-              <FaRegCalendarAlt />
-              <span>{formatDate(date)}</span>
+          <Link href="/" className="flex items-center gap-2 lg:gap-[10px]">
+            <div className="relative w-[48px] h-[48px] sm:w-[58px] sm:h-[58px]">
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/316cb117ddbaffc9ee9b85a6286b81a6217f2006?width=116"
+                alt="Rexino Logo"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 rounded-[120px] bg-blue-secondary mix-blend-hue" />
             </div>
-          )}
+            <div className="flex flex-col">
+              <span className="text-green-primary font-bold text-[16px] sm:text-[21px] leading-tight font-dm-sans">
+                Rexino
+              </span>
+              <span className="text-green-primary font-normal text-[11px] sm:text-[14px] leading-tight font-dm-sans">
+                Chemical Industries
+              </span>
+            </div>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-[#111112]  text-base font-normal leading-[27px] hover:text-[var(--primary)] transition-all duration-300"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 text-green-primary hover:text-[var(--primary)] transition-all duration-300"
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+            <CommonButton
+              label="Download Brochure"
+              className="sm:!py-[10px] sm:!px-8 lg:block hidden"
+            />
+          </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white px-4 py-4">
+          <nav className="flex flex-col gap-4 border-t border-gray-200 pt-5">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-[#111112] text-lg font-normal leading-[27px] hover:text-[var(--primary)] transition-all duration-300"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <CommonButton
+            label="Download Brochure"
+            className="sm:!py-[10px] sm:!px-8 mt-8"
+          />
+        </div>
+      )}
     </header>
   );
-};
-
-export default Header;
+}

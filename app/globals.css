@@ -1,95 +1,84 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "DM Sans";
+  src: url("../public/font/DMSans-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("../public/font/DMSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("../public/font/DMSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("../public/font/DMSans-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("../public/font/DMSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme {
-  --color-brand-red: #1A4E8A;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --primary: #3c7ecd;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", sans-serif !important;
 }
-
-/* Ultra-stylish red-themed thin scrollbar */
+.ct-container {
+  max-width: 1140px;
+  padding: 0 20px ;
+  width: 100%;
+  margin: 0 auto
+  
+}
 
 ::-webkit-scrollbar {
   width: 2px;
   height: 2px;
 }
 
-/* Track (background of scrollbar) */
 ::-webkit-scrollbar-track {
   background: linear-gradient(180deg, #fff5f5, #e9f0fa);
-  /* soft blue-white gradient */
   border-radius: 8px;
   box-shadow: inset 0 0 2px rgba(100, 100, 100, 0.15);
-  /* inner light grey */
 }
 
-/* Thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #1A4E8A, #153a66);
-  /* royal blue gradient */
-  border-radius: 8px;
-  box-shadow: inset 0 0 3px rgba(255, 255, 255, 0.3),
-    /* inner white glow */
-    0 0 5px rgba(26, 78, 138, 0.6);
-  /* outer blue aura */
-  transition: all 0.3s ease;
-}
-
-/* Thumb hover */
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #2a6dba, #123056);
-  /* brighter blue */
-  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.4),
-    0 0 6px rgba(18, 48, 86, 0.8);
-  /* stronger blue aura */
-}
-
-/* Horizontal scrollbar styles */
-::-webkit-scrollbar:horizontal {
-  height: 4px;
-}
-
-::-webkit-scrollbar-track:horizontal {
-  background: linear-gradient(90deg, #fff5f5, #e9f0fa);
-  border-radius: 8px;
-  box-shadow: inset 0 0 2px rgba(100, 100, 100, 0.15);
-}
-
-::-webkit-scrollbar-thumb:horizontal {
-  background: linear-gradient(90deg, #1A4E8A, #153a66);
+  background: linear-gradient(180deg, #1a4e8a, #153a66);
   border-radius: 8px;
   box-shadow: inset 0 0 3px rgba(255, 255, 255, 0.3),
     0 0 5px rgba(26, 78, 138, 0.6);
   transition: all 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:horizontal:hover {
-  background: linear-gradient(90deg, #2a6dba, #123056);
-  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.4),
-    0 0 6px rgba(18, 48, 86, 0.8);
 }
 
 .swiper-pagination-bullet.custom-bullet {
   background-color: #9ca3af !important;
   opacity: 1 !important;
-  width: 8px !important;
+  width: 10px !important;
   /* smaller width */
-  height: 8px !important;
+  height: 10px !important;
   /* smaller height */
   margin: 0 4px !important;
   /* slightly tighter spacing */
@@ -100,16 +89,11 @@ body {
   outline: none !important;
 }
 
-.swiper-pagination-bullet-active.custom-bullet-active {
-  background-color: #000000 !important;
-  transform: scale(1.2) !important;
-  /* still provides a "pop" on active */
-}
 
 .swiper-pagination {
   bottom: 0 !important;
   position: relative !important;
-  margin-top: 20px !important;
+  margin-top: 30px !important;
   text-align: center !important;
 }
 
@@ -119,4 +103,7 @@ body {
 
 .swiper-pagination-bullet-active.custom-bullet-active:hover {
   background-color: #000000 !important;
+}
+.swiper-pagination-bullet-active{
+  background-color: var(--primary) !important;
 }
