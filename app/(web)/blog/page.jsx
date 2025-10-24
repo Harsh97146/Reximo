@@ -14,7 +14,7 @@ export default function BlogList() {
         const data = await res.json();
         setBlogs(data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching blogs:", err);
       } finally {
         setLoading(false);
       }
@@ -22,14 +22,34 @@ export default function BlogList() {
     fetchBlogs();
   }, []);
 
-  if (loading) return <div className="p-6 text-center text-gray-500">Loading blogs...</div>;
+  if (loading) {
+    return (
+      <div className="p-6 text-center text-gray-500">
+        Loading blogs...
+      </div>
+    );
+  }
 
-  if (blogs.length === 0)
-    return <div className="p-6 text-center text-gray-500">No blogs available.</div>;
+  if (blogs.length === 0) {
+    return (
+      <section className="py-20 bg-gray-100" style={{ marginTop: "150px" }}>
+        <div className="ct-container text-center">
+          <h1 className="text-3xl font-bold mb-4 text-gray-800">
+            All Blogs
+          </h1>
+          <p className="text-gray-600 text-lg font-medium">
+            No blogs available right now. Please check back later!
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className="p-6 ct-container mx-20" style={{marginTop: "150px"}}>
-      <h1 className="text-3xl font-bold mb-6 mx-auto my-2 text-center">All Blogs</h1>
+    <div className="p-6 ct-container mx-20" style={{ marginTop: "150px" }}>
+      <h1 className="text-3xl font-bold mb-6 mx-auto my-2 text-center">
+        All Blogs
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {blogs.map((blog) => (
           <div
@@ -39,7 +59,7 @@ export default function BlogList() {
           >
             {blog.featuredImage && (
               <img
-                src={`${blog.featuredImage}`}
+                src={blog.featuredImage}
                 alt={blog.title}
                 className="h-48 w-full object-cover"
               />

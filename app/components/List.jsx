@@ -34,15 +34,22 @@ const List = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-100" style={{marginTop: "50px"}}>
-      <div className="ct-containers  px-4 sm:px-6 lg:px-8">
+    <section className="py-16 bg-gray-100" style={{ marginTop: "50px" }}>
+      <div className="ct-containers px-4 sm:px-6 lg:px-8">
         {/* Header */}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((item) => (
-            <ListItem key={item._id} item={item} />
-          ))}
-        </div>
+        {products.length === 0 ? (
+          <div className="text-center py-10">
+            <p className="text-gray-600 text-lg font-medium">
+              No products found.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((item) => (
+              <ListItem key={item._id} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
