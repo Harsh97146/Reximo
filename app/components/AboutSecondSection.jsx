@@ -36,11 +36,11 @@ const AboutSecondSection = () => {
   ];
 
   return (
-    <section className="bg-brand-red py-12 px-4 sm:px-6 lg:px-8">
+    <section className="bg-brand-red py-12 px-4 sm:px-6 lg:px-8 mt-20" style={{color: "black"}}>
       <div className="max-w-7xl mx-auto">
         {/* Header Text */}
         <div className="text-center mb-12">
-          <p className="text-white text-base sm:text-lg lg:text-xl leading-relaxed max-w-5xl mx-auto">
+          <p className=" text-base sm:text-lg lg:text-xl leading-relaxed max-w-5xl mx-auto">
             For over three decades, Rexino has been shaping homes, offices, and
             industries with world-class ceramic and construction chemicals. From
             Tile &amp; Stone Care to Building Repair, Grouting, and
@@ -61,12 +61,12 @@ const AboutSecondSection = () => {
                   alt={value.alt}
                   width={96}
                   height={96}
-                  className="w-full h-full object-contain filter brightness-0 invert"
+                  className="w-full h-full object-contain "
                 />
               </div>
 
               {/* Title */}
-              <h3 className="text-white text-sm sm:text-base lg:text-lg font-medium">
+              <h3 className=" text-sm sm:text-base lg:text-lg font-medium">
                 {value.title}
               </h3>
             </div>

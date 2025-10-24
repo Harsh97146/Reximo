@@ -34,15 +34,9 @@ const List = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 bg-gray-100" style={{marginTop: "50px"}}>
+      <div className="ct-containers  px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-800">Our Products</h2>
-          <p className="mt-2 text-gray-600">
-            Explore our range of high-quality products
-          </p>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((item) => (

@@ -2,8 +2,14 @@ import Image from "next/image";
 
 const ProductFirstSection = () => {
   return (
-    <section className="relative bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="relative z-10 max-w-[1400px] mx-auto">
+    <section className="relative bg-gray-50 py-16 ct-container sm:px-6 lg:px-8" style={{ marginTop: "200px" }}>
+      <div className="mb-8 text-center py-10">
+        <h2 className="text-3xl font-bold text-gray-800">Our Products</h2>
+        <p className="mt-2 text-gray-600">
+          Explore our range of high-quality products
+        </p>
+      </div>
+      <div className="relative z-10 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-6">

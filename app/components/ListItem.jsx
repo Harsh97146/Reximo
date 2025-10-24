@@ -7,7 +7,7 @@ const ListItem = ({ item }) => {
   return (
     <Link href={`/product/${_id}`}>
       <article
-        className={`bg-white rounded-2xl shamdow-sm flex flex-col h-full transition-shadow duration-300 hover:shadow-md w-full max-w-lg mx-auto border border-gray-100 cursor-pointer`}
+        className={`bg-white rounded-2xl shamdow-sm flex flex-col h-full transition-shadow duration-300 hover:shadow-md w-full  border border-gray-100 cursor-pointer`}
       >
         {/* Image */}
         <div className="px-5 pt-5">

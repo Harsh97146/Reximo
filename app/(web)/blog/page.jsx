@@ -28,8 +28,8 @@ export default function BlogList() {
     return <div className="p-6 text-center text-gray-500">No blogs available.</div>;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">All Blogs</h1>
+    <div className="p-6 ct-container mx-20" style={{marginTop: "150px"}}>
+      <h1 className="text-3xl font-bold mb-6 mx-auto my-2 text-center">All Blogs</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {blogs.map((blog) => (
           <div

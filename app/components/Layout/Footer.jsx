@@ -42,16 +42,6 @@ const contactInfo = [
   { label: "./img/items/twet.png" },
 ];
 
-const brandingLinks = [
-  { src: "/img/brand1.png", alt: "Brand 1" },
-  { src: "/img/brand2.png", alt: "Brand 2" },
-];
-
-const socialLinks = [
-  { label: "Facebook", href: "https://facebook.com", icon: "F" },
-  { label: "Twitter", href: "https://twitter.com", icon: "T" },
-];
-
 const Footer = () => {
   const [open, setOpen] = useState(false);
   const [year, setYear] = useState("");

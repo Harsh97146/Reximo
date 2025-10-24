@@ -5,7 +5,7 @@ import { contactInfo } from "./Layout/helper";
 
 const ContactUsSection = () => {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-12 text-gray-800">
+    <section className="max-w-7xl mx-auto px-6 py-12 text-gray-800 mx-20" style={{marginTop: "150px"}}>
 
       {/* Rexino Description */}
       <p className="mb-6 text-gray-700">
@@ -37,13 +37,13 @@ const ContactUsSection = () => {
           >
             <div className="mr-4 text-2xl">{info.icon}</div>
             <div>
-              <h3 className="text-lg font-semibold text-white">{info.label}</h3>
+              <h3 className="text-lg font-semibold ">{info.label}</h3>
               {info.href ? (
-                <a href={info.href} className="text-white hover:underline">
+                <a href={info.href} className=" hover:underline">
                   {info.value}
                 </a>
               ) : (
-                <p className="text-white">{info.value}</p>
+                <p className="">{info.value}</p>
               )}
             </div>
           </div>

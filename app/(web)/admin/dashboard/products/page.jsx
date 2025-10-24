@@ -113,6 +113,7 @@ export default function AdminProductsWithModal() {
       formData.append("name", form.name ?? "");
       formData.append("category", form.category ?? "");
       formData.append("otherData", form.otherData ?? "");
+      formData.append("isFeatured", form.isFeatured ? "true" : "false"); // ✅ added
 
       [
         "advantages",
@@ -153,7 +154,7 @@ export default function AdminProductsWithModal() {
       }
 
       // Reset form
-      setForm({ category: "" });
+      setForm({ category: "", isFeatured: false }); // ✅ added
       setFiles([]);
       setPreviewImages([]);
       setDatasheetFiles([]);
@@ -402,6 +403,17 @@ export default function AdminProductsWithModal() {
               >
                 {editingId ? "Update" : "Add"}
               </button>
+              <div className="mb-4 flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={form.isFeatured || false}
+                  onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })}
+                  id="isFeatured"
+                />
+                <label htmlFor="isFeatured" className="font-medium">
+                  Mark as Featured Product
+                </label>
+              </div>
               <button
                 onClick={() => {
                   setForm({ category: "" });
@@ -441,11 +453,11 @@ export default function AdminProductsWithModal() {
                 <td className="px-6 py-4">
                   {Array.isArray(p.packingDetails)
                     ? p.packingDetails.map((pd, i) => (
-                        <div key={i}>
-                          {pd.packing} — ₹{pd.price}{" "}
-                          {pd.discountPrice && <span className="text-sm text-green-600">(₹{pd.discountPrice} discounted)</span>}
-                        </div>
-                      ))
+                      <div key={i}>
+                        {pd.packing} — ₹{pd.price}{" "}
+                        {pd.discountPrice && <span className="text-sm text-green-600">(₹{pd.discountPrice} discounted)</span>}
+                      </div>
+                    ))
                     : null}
                 </td>
                 <td className="px-6 py-4 flex gap-1">

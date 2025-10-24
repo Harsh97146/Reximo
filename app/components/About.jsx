@@ -1,8 +1,16 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import ProductTitle from "./ul/ProductTitle";
 import CommonButton from "./ul/Button";
 
 const About = () => {
+  const router = useRouter();
+
+  const handleRedirect = () => {
+    router.push("/about-us"); // 👈 change this to your target route
+  };
+
   return (
     <>
       <section className="w-full relative">
@@ -28,12 +36,16 @@ const About = () => {
                   />
                   <p className="text-base text-[#111112] font-normal">
                     Rexino has been playing an integral role in your homes,
-                    offices, and lives. It is a name synonymous with severe or
-                    strong with around experience of 3 decades in the ceramic
-                    and construction chemicals field.
+                    offices, and lives. It is a name synonymous with excellence
+                    and reliability, with around 3 decades of experience in the
+                    ceramic and construction chemicals field.
                   </p>
                 </div>
-                <CommonButton label="Learn More" className="" />
+                <CommonButton
+                  label="Learn More"
+                  className=""
+                  onClick={handleRedirect}
+                />
               </div>
             </div>
           </div>

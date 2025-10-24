@@ -79,18 +79,18 @@ export const informationLinks = [
 
 export const contactInfo = [
   {
-    icon: <FaMapMarkerAlt className="text-white mt-1 flex-shrink-0" />,
+    icon: <FaMapMarkerAlt className=" mt-1 flex-shrink-0" />,
     label: "Address",
     value: "Rexino Chemical Industries, India",
   },
   {
-    icon: <FaPhoneAlt className="text-white flex-shrink-0" />,
+    icon: <FaPhoneAlt className=" flex-shrink-0" />,
     label: "Phone",
     value: "+91 90168 90128",
     href: "tel:+919016890128",
   },
   {
-    icon: <FaEnvelope className="text-white flex-shrink-0" />,
+    icon: <FaEnvelope className=" flex-shrink-0" />,
     label: "Email",
     value: "rexinoindustries@gmail.com",
     href: "mailto:rexinoindustries@gmail.com",

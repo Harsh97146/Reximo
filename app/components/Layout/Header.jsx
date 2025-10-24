@@ -4,15 +4,18 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import CommonButton from "../ul/Button";
+import { FiDownload } from "react-icons/fi";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Products", href: "/products" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Products", href: "/product" },
+    { label: "Blogs", href: "/blog" },
+    { label: "Projects ", href: "/projects" },
+    { label: "Contact Us", href: "/contact-us" },
   ];
 
   return (
@@ -65,10 +68,16 @@ export default function Header() {
                 <Menu className="w-6 h-6" />
               )}
             </button>
-            <CommonButton
-              label="Download Brochure"
-              className="sm:!py-[10px] sm:!px-8 lg:block hidden"
-            />
+            <a
+              href="/brochure/1-1.pdf"
+              download
+              className="bg-brand-red hover:bg-brand-red/90 text-white font-medium px-6 py-3 rounded-2xl inline-flex items-center gap-2 transition"
+            >
+              <CommonButton
+                label="Download Brochure"
+                className="sm:!py-[10px] sm:!px-8 lg:block hidden"
+              />
+            </a>
           </div>
         </div>
       </div>
