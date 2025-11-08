@@ -10,9 +10,9 @@ const ProductPackingCard = ({pack}) => (
   <div className="group border rounded-xl p-4 shadow bg-white flex flex-col items-start gap-3 transition-all hover:shadow-lg">
     <p className="font-semibold text-lg">{pack.packing}</p>
     <div className="flex items-center gap-2">
-      <span className="text-xl font-bold text-brand-red">₹{pack.price}</span>
+      <span className="text-xl font-bold text-brand-red">₹{pack.discountPrice}</span>
       {!!pack.discountPrice &&
-        <span className="text-sm text-green-600 line-through">₹{pack.discountPrice}</span>}
+        <span className="text-sm text-green-600 line-through">₹{pack.price}</span>}
     </div>
     <button className="inline-block mt-2 bg-brand-red text-white px-5 py-1.5 rounded hover:bg-brand-red/90 transition font-medium">
       Enquire

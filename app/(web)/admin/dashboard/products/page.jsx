@@ -182,10 +182,10 @@ export default function AdminProductsWithModal() {
     setShowModal(true);
 
     const backendImages =
-      product.images?.map((img) => (img.startsWith("http") ? img : `http://localhost:3001${img}`)) || [];
+      product.images?.map((img) => (img.startsWith("http") ? img : `${API_URL}${img}`)) || [];
 
     const endImagePreviews =
-      product.endImage?.map((img) => (img.startsWith("http") ? img : `http://localhost:3001${img}`)) || [];
+      product.endImage?.map((img) => (img.startsWith("http") ? img : `${API_URL}${img}`)) || [];
 
     setPreviewImages([...backendImages, ...endImagePreviews]);
 
@@ -463,7 +463,7 @@ export default function AdminProductsWithModal() {
                 <td className="px-6 py-4 flex gap-1">
                   {p.images?.map((img, i) => (
                     <div key={i} className="w-16 h-16 relative">
-                      <Image src={img.startsWith("http") ? img : `http://localhost:3001${img}`} alt={p.name} fill className="object-cover rounded" />
+                      <Image src={img.startsWith("http") ? img : `${API_URL}${img}`} alt={p.name} fill className="object-cover rounded" />
                     </div>
                   ))}
                 </td>

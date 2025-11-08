@@ -6,9 +6,10 @@ export default function BlogManagement() {
   const router = useRouter();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
   const fetchBlogs = async () => {
-    const res = await fetch("http://localhost:3001/api/blogs");
+    const res = await fetch(`${apiUrl}/blogs`);
     const data = await res.json();
     setBlogs(data);
     setLoading(false);
@@ -20,7 +21,7 @@ export default function BlogManagement() {
 
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this blog?")) {
-      await fetch(`http://localhost:3001/api/blogs/${id}`, { method: "DELETE" });
+      await fetch(`${apiUrl}/blogs/${id}`, { method: "DELETE" });
       fetchBlogs();
     }
   };

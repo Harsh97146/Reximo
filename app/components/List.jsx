@@ -12,7 +12,7 @@ const List = () => {
 
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/products"); // your API endpoint
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"}/products?isFeatured=true`); // your API endpoint
         const data = await res.json();
         setProducts(data);
       } catch (err) {

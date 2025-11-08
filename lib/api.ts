@@ -18,7 +18,7 @@ export interface Project {
   updatedAt?: string;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://13.53.212.198:3001/api";
 
 export const fetchProjects = async (): Promise<Project[]> => {
   const res = await fetch(`${BASE_URL}/projects`, { cache: "no-store" });

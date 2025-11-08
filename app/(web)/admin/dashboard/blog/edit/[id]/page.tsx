@@ -9,13 +9,14 @@ export default function EditBlog() {
   const router = useRouter();
   const [blog, setBlog] = useState(null);
   const [preview, setPreview] = useState("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
   useEffect(() => {
     const fetchBlog = async () => {
-      const res = await fetch(`http://localhost:3001/api/blogs/${id}`);
+      const res = await fetch(`${apiUrl}/blogs/${id}`);
       const data = await res.json();
       setBlog(data);
-      setPreview(`http://localhost:3001/uploads/${data.featuredImage}`);
+      setPreview(`${apiUrl}/uploads/${data.featuredImage}`);
     };
     fetchBlog();
   }, [id]);
@@ -38,7 +39,7 @@ export default function EditBlog() {
       }
     });
 
-    await fetch(`http://localhost:3001/api/blogs/${id}`, {
+    await fetch(`${apiUrl}/blogs/${id}`, {
       method: "PUT",
       body: data,
     });

@@ -8,7 +8,7 @@ export default function DealersList() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_URL = "http://localhost:3001/api/dealers";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api/dealers";
 
   // ✅ Fetch all dealers
   const fetchDealers = async () => {

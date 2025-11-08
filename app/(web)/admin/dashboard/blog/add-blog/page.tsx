@@ -7,6 +7,8 @@ import router from "next/router";
 
 // Dynamically import react-quill-new and image resize module to prevent SSR issues
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+
 const ImageResizeModule = dynamic(
   () => import("quill-image-resize-module-react"),
   { ssr: false }
@@ -34,20 +36,30 @@ export default function AddBlog() {
   }, []);
 
   // Quill editor modules and formats configuration
-  const modules = useMemo(() => ({
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["link", "image"],
-      ["clean"],
-    ],
-    imageResize: {},
-  }), []);
+  const modules = useMemo(
+    () => ({
+      toolbar: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link", "image"],
+        ["clean"],
+      ],
+      imageResize: {},
+    }),
+    []
+  );
 
   const formats = [
-    "header", "bold", "italic", "underline", "strike",
-    "list", "bullet", "link", "image",
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "list",
+    "bullet",
+    "link",
+    "image",
   ];
 
   // Handle featured image selection
@@ -73,7 +85,7 @@ export default function AddBlog() {
     });
 
     try {
-      await fetch("http://localhost:3001/api/blogs", {
+      await fetch(`${apiUrl}/blogs`, {
         method: "POST",
         body: formData,
       });
