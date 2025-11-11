@@ -40,7 +40,7 @@ const Footer = () => {
   const fetchProducts = async (category) => {
     try {
       setLoadingCategory(category);
-      const res = await fetch(`http://localhost:3001/api/products?category=${category}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?category=${category}`);
       const data = await res.json();
       setProductsByCategory((prev) => ({ ...prev, [category]: data }));
     } catch (err) {

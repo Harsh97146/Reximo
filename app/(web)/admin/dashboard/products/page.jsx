@@ -13,7 +13,7 @@ export default function AdminProductsWithModal() {
   const [datasheetFiles, setDatasheetFiles] = useState([]);
   const [datasheetPreviews, setDatasheetPreviews] = useState([]);
 
-  const API_URL = "http://localhost:3001/api/products";
+  const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/products` || "http://localhost:3001/api/products";
 
   // Fetch products
   const fetchProducts = async () => {

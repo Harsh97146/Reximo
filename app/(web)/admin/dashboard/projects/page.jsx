@@ -24,7 +24,7 @@ const ProjectRoutes = () => {
   const [showImagePopup, setShowImagePopup] = useState(false);
   const [popupImage, setPopupImage] = useState(null);
 
-  const BASE_URL = "http://localhost:3001/api/projects";
+  const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"}/projects`;
 
   // Fetch Projects
   const fetchProjectsData = async () => {

@@ -12,7 +12,7 @@ const ProjectDetailsSection = () => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/api/projects/${id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"}/projects/${id}`);
         const data = await res.json();
         setProject(data);
       } catch (error) {
