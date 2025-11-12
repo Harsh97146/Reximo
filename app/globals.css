@@ -47,10 +47,70 @@ body {
   font-family: "DM Sans", sans-serif !important;
 }
 .ct-container {
-  padding: 0 50px ;
   width: 100%;
-  margin: 0 auto
-  
+  margin: 0 auto;
+  padding: 0 16px; /* Mobile: 16px */
+}
+
+/* Responsive container padding and max-width */
+@media (min-width: 375px) {
+  .ct-container {
+    padding: 0 20px; /* Small mobile */
+  }
+}
+
+@media (min-width: 640px) {
+  .ct-container {
+    padding: 0 24px; /* Tablet */
+  }
+}
+
+@media (min-width: 768px) {
+  .ct-container {
+    padding: 0 32px; /* Large tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .ct-container {
+    padding: 0 40px; /* Desktop */
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ct-container {
+    padding: 0 50px; /* Large desktop */
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .ct-container {
+    padding: 0 60px; /* XL desktop */
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .ct-container {
+    padding: 0 80px; /* Full HD */
+    max-width: 1800px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .ct-container {
+    padding: 0 120px; /* 2K/QHD */
+    max-width: 2400px;
+  }
+}
+
+@media (min-width: 3840px) {
+  .ct-container {
+    padding: 0 160px; /* 4K UHD */
+    max-width: 3600px;
+  }
 }
 
 ::-webkit-scrollbar {

@@ -51,12 +51,12 @@ export default function ThirdSection() {
   const nextRef = useRef(null);
 
   return (
-    <section className="py-12 bg-white">
-      <div className="max-w-screen-xl mx-auto px-4 lg:px-0">
-        <h2 className="text-center text-3xl font-semibold mb-6">
+    <section className="py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16 bg-white">
+      <div className="ct-container">
+        <h2 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold mb-4 sm:mb-5 md:mb-6 px-4">
           Building Trust with 3 Decades of Excellence
         </h2>
-        <p className="text-center text-gray-600 max-w-3xl mx-auto mb-10">
+        <p className="text-center text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto mb-8 sm:mb-10 md:mb-12 px-4 leading-relaxed">
           Rexino has been an integral part of homes, offices, and industries for
           over 30 years. A trusted name in ceramic and construction chemicals,
           we deliver innovative solutions in Tile Fixing &amp; Care, Stone Care,
@@ -113,10 +113,14 @@ export default function ThirdSection() {
           }}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           breakpoints={{
-            0: { slidesPerView: 1, spaceBetween: 0 },
-            640: { slidesPerView: 1, spaceBetween: 0 },
-            768: { slidesPerView: 2, spaceBetween: 10 },
-            1024: { slidesPerView: 4, spaceBetween: 16 },
+            0: { slidesPerView: 1, spaceBetween: 8 },
+            640: { slidesPerView: 1.5, spaceBetween: 12 },
+            768: { slidesPerView: 2, spaceBetween: 16 },
+            1024: { slidesPerView: 3, spaceBetween: 20 },
+            1280: { slidesPerView: 4, spaceBetween: 24 },
+            1536: { slidesPerView: 4, spaceBetween: 28 },
+            1920: { slidesPerView: 5, spaceBetween: 32 },
+            2560: { slidesPerView: 6, spaceBetween: 40 },
           }}
           speed={1000}
           className="w-full pb-16"
@@ -135,7 +139,7 @@ export default function ThirdSection() {
                   className="object-contain w-full h-auto"
                 />
               </div>
-              <h3 className="text-center text-sm font-bold tracking-tight mt-2 mb-4">
+              <h3 className="text-center text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold tracking-tight mt-2 sm:mt-3 md:mt-4 mb-3 sm:mb-4 px-2">
                 {slide.title}
               </h3>
             </SwiperSlide>

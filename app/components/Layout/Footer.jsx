@@ -64,39 +64,39 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#222427] text-white sm:mt-16 mt-12 sm:pt-14 pt-10">
+    <footer className="bg-[#222427] text-white mt-8 sm:mt-12 md:mt-16 lg:mt-20 pt-8 sm:pt-10 md:pt-12 lg:pt-14 xl:pt-16">
       <div className="ct-container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 gap-x-5 gap-y-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 sm:gap-8 md:gap-10 lg:gap-x-5 xl:gap-x-8 gap-y-8 sm:gap-y-10">
           {/* Logo */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 lg:gap-[10px]">
-              <div className="relative w-[48px] h-[48px] sm:w-[58px] sm:h-[58px]">
+          <div className="sm:col-span-2 lg:col-span-2 xl:col-span-2">
+            <Link href="/" className="flex items-center gap-2 sm:gap-2.5 lg:gap-[10px] xl:gap-3">
+              <div className="relative w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] md:w-[52px] md:h-[52px] lg:w-[58px] lg:h-[58px] xl:w-[64px] xl:h-[64px]">
                 <img src="./img/logo.png" alt="Rexino Logo" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 rounded-[120px] bg-blue-secondary mix-blend-hue" />
               </div>
               <div className="flex flex-col">
-                <span className="text-green-primary font-bold text-[16px] sm:text-[21px] leading-tight font-dm-sans">
+                <span className="text-green-primary font-bold text-[16px] sm:text-[18px] md:text-[20px] lg:text-[21px] xl:text-[24px] 2xl:text-[28px] leading-tight font-dm-sans">
                   Rexino
                 </span>
-                <span className="text-green-primary font-normal text-[11px] sm:text-[14px] leading-tight font-dm-sans">
+                <span className="text-green-primary font-normal text-[11px] sm:text-[12px] md:text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] leading-tight font-dm-sans">
                   Chemical Industries
                 </span>
               </div>
             </Link>
-            <p className="mt-4 text-base font-normal text-white w-full max-w-[373px]">
+            <p className="mt-4 sm:mt-5 md:mt-6 text-sm sm:text-base md:text-lg font-normal text-white w-full max-w-full sm:max-w-[373px] lg:max-w-[400px] xl:max-w-[450px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
             </p>
           </div>
 
           {/* Quick & Info Links */}
           <div className="w-full">
-            <h3 className="text-[#d1b56c] mb-4 text-xl font-semibold">Quick Links</h3>
-            <ul className="flex flex-col gap-2">
+            <h3 className="text-[#d1b56c] mb-3 sm:mb-4 md:mb-5 text-lg sm:text-xl md:text-2xl font-semibold">Quick Links</h3>
+            <ul className="flex flex-col gap-2 sm:gap-2.5">
               {[...quickLinks, ...informationLinks].map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-base text-white font-normal transition-all duration-300 hover:text-[var(--primary)]"
+                    className="text-sm sm:text-base md:text-lg text-white font-normal transition-all duration-300 hover:text-[var(--primary)]"
                   >
                     {link.label}
                   </Link>
@@ -107,7 +107,7 @@ const Footer = () => {
 
           {/* Our Products */}
           <div className="">
-            <h3 className="text-[#d1b56c] mb-4 text-xl font-semibold">Our Products</h3>
+            <h3 className="text-[#d1b56c] mb-3 sm:mb-4 md:mb-5 text-lg sm:text-xl md:text-2xl font-semibold">Our Products</h3>
             <ul className="space-y-2">
               {categories.map((category) => (
                 <li key={category}>
@@ -146,7 +146,7 @@ const Footer = () => {
 
           {/* Infrastructure Section */}
           <div className="space-y-2">
-            <h3 className="text-[#d1b56c] mb-4 text-xl font-semibold">Infrastructure</h3>
+            <h3 className="text-[#d1b56c] mb-3 sm:mb-4 md:mb-5 text-lg sm:text-xl md:text-2xl font-semibold">Infrastructure</h3>
             {Object.entries(infraData).map(([section, items]) => (
               <div key={section}>
                 <button
@@ -171,15 +171,15 @@ const Footer = () => {
           </div>
 
           {/* Social Media */}
-          <div className="space-y-4">
-            <h3 className="text-[#d1b56c] mb-4 text-xl font-semibold">Social Media</h3>
-            <ul className="flex items-center gap-3">
+          <div className="space-y-3 sm:space-y-4">
+            <h3 className="text-[#d1b56c] mb-3 sm:mb-4 md:mb-5 text-lg sm:text-xl md:text-2xl font-semibold">Social Media</h3>
+            <ul className="flex items-center gap-2 sm:gap-3 md:gap-4">
               {contactInfo.map((item) => (
                 <li
                   key={item.label}
-                  className="w-10 h-10 rounded-full flex items-center justify-center bg-[rgba(255,255,255,0.10)] transition-all duration-300 hover:bg-[var(--primary)] cursor-pointer"
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center bg-[rgba(255,255,255,0.10)] transition-all duration-300 hover:bg-[var(--primary)] cursor-pointer"
                 >
-                  <img src={item.label} alt="icon" className="w-[18px] h-[18px] object-contain" />
+                  <img src={item.label} alt="icon" className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px] object-contain" />
                 </li>
               ))}
             </ul>
@@ -187,7 +187,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="p-3 w-full text-sm text-white font-normal text-center bg-[rgba(255,255,255,0.04)] sm:mt-16 mt-10">
+      <div className="p-3 sm:p-4 md:p-5 w-full text-xs sm:text-sm md:text-base text-white font-normal text-center bg-[rgba(255,255,255,0.04)] mt-8 sm:mt-12 md:mt-14 lg:mt-16">
         Copyright @{year} rexino. All Rights Reserved.
       </div>
     </footer>

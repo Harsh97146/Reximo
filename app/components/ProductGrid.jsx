@@ -40,31 +40,31 @@ const ProductGrid = () => {
   }
 
   return (
-    <section className="w-full relative sm:py-20 py-10 bg-[url('/img/home/bg-line.png')] bg-no-repeat bg-cover bg-top-center">
+    <section className="w-full relative py-10 sm:py-14 md:py-16 lg:py-20 xl:py-24 bg-[url('/img/home/bg-line.png')] bg-no-repeat bg-cover bg-top-center">
       <div className="ct-container">
         <ProductTitle
           heading="Products We Provide"
           subHeading="Products"
           align="center"
         />
-        <div className="sm:mt-14 mt-9 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 sm:gap-[30px] gap-5">
+        <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 xl:gap-[30px]">
           {products.map((product, index) => (
             <div
               key={index}
-              className="w-full p-3 rounded-2xl bg-white shadow-[0_0_20px_0_rgba(0,0,0,0.06)] relative overflow-hidden hover:[&:hover_.hover-none]:opacity-5"
+              className="w-full p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl bg-white shadow-[0_0_20px_0_rgba(0,0,0,0.06)] relative overflow-hidden hover:[&:hover_.hover-none]:opacity-5 transition-all duration-300 hover:shadow-lg"
             >
-              <div className="w-full rounded-2xl md:h-[280px] sm:h-[200px] h-[160px] bg-[#f9f9f9] overflow-hidden mb-5">
+              <div className="w-full rounded-xl sm:rounded-2xl h-[140px] sm:h-[180px] md:h-[220px] lg:h-[260px] xl:h-[280px] 2xl:h-[320px] bg-[#f9f9f9] overflow-hidden mb-4 sm:mb-5">
                 <img
                   src={product.endImage[0] || "/img/home/product-img.png"}
                   alt={product.name}
                   className="w-full h-full object-contain"
                 />
               </div>
-              <div className="px-2 mb-2">
-                <h3 className="block mb-1 text-[#111112] sm:text-[22px] sm:leading-[33px] text-xl font-semibold">
+              <div className="px-2 sm:px-3 mb-2">
+                <h3 className="block mb-1 sm:mb-2 text-[#111112] text-lg sm:text-xl md:text-[22px] lg:text-2xl xl:text-3xl font-semibold leading-tight">
                   {product.name}
                 </h3>
-                <span className="block text-base font-normal text-[#595959]">
+                <span className="block text-sm sm:text-base md:text-lg font-normal text-[#595959] leading-relaxed">
                   {product.description[0]}
                 </span>
               </div>
@@ -78,8 +78,8 @@ const ProductGrid = () => {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-center m:mt-14 mt-10">
-          <CommonButton label="Contact Us" className="w-fit" />
+        <div className="flex items-center justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16">
+          <CommonButton label="Contact Us" className="w-fit text-sm sm:text-base md:text-lg" />
         </div>
       </div>
     </section>

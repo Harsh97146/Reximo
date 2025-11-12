@@ -13,28 +13,28 @@ const About = () => {
 
   return (
     <>
-      <section className="w-full relative">
+      <section className="w-full relative py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
         <div className="ct-container">
-          <div className="sm:py-16 lg:px-20 sm:px-14 p-6 bg-[#B9CFE921] rounded-2xl">
-            <div className="grid xl:grid-cols-[auto_505px] lg:grid-cols-[auto_400px] grid-cols-1 xl:gap-20 sm:gap-10 gap-8 items-center">
+          <div className="py-8 sm:py-12 md:py-14 lg:py-16 xl:py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 bg-[#B9CFE921] rounded-xl sm:rounded-2xl">
+            <div className="grid xl:grid-cols-[1fr_500px] lg:grid-cols-[1fr_400px] grid-cols-1 gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 2xl:gap-20 items-center">
               <img
                 src="./img/home/about-home-img.png"
                 alt="about-home-img"
-                className="w-full h-full object-contain"
+                className="w-full h-auto object-contain order-2 lg:order-1"
               />
-              <div className="w-full">
+              <div className="w-full order-1 lg:order-2">
                 <ProductTitle
                   heading="Three Decades of Excellence"
                   subHeading="About Us"
                   align="left"
                 />
-                <div className="flex items-start gap-4 mt-[30px] sm:mb-12 mb-8">
+                <div className="flex items-start gap-3 sm:gap-4 mt-6 sm:mt-8 md:mt-[30px] mb-6 sm:mb-8 md:mb-10 lg:mb-12">
                   <img
                     src="./img/home/success.png"
                     alt="icon"
-                    className="w-6 h-6 shrink-0"
+                    className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 shrink-0 mt-1"
                   />
-                  <p className="text-base text-[#111112] font-normal">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#111112] font-normal leading-relaxed">
                     Rexino has been playing an integral role in your homes,
                     offices, and lives. It is a name synonymous with excellence
                     and reliability, with around 3 decades of experience in the
@@ -43,7 +43,7 @@ const About = () => {
                 </div>
                 <CommonButton
                   label="Learn More"
-                  className=""
+                  className="text-sm sm:text-base md:text-lg"
                   onClick={handleRedirect}
                 />
               </div>

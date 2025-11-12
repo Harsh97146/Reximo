@@ -16,8 +16,8 @@ const ProductTitle = ({
 
   return (
     <div className={` ${alignClass} ${className}`}>
-      <h2 className="mb-1 font-semibold text-lg text-[#d1b56c]">{subHeading}</h2>
-      <p className="font-semibold md:text-[36px] sm:text-2xl text-xl text-[#161616]">{heading} </p>
+      <h2 className="mb-1 sm:mb-2 font-semibold text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#d1b56c]">{subHeading}</h2>
+      <p className="font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] xl:text-4xl 2xl:text-5xl text-[#161616] leading-tight">{heading} </p>
     </div>
   );
 };

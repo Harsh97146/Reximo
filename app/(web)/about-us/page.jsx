@@ -5,8 +5,8 @@ import React from "react";
 const AboutUsPage = () => {
   return (
     <div>
-      <AboutSecondSection />
       <AboutFirstSection />
+      <AboutSecondSection />
     </div>
   );
 };
