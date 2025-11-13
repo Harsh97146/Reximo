@@ -9,10 +9,18 @@ export default function BlogManagement() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
   const fetchBlogs = async () => {
-    const res = await fetch(`${apiUrl}/blogs`);
-    const data = await res.json();
-    setBlogs(data);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const res = await fetch(`${apiUrl}/blogs`);
+      if (!res.ok) throw new Error("Failed to fetch blogs");
+      const data = await res.json();
+      setBlogs(data);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      setBlogs([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -20,21 +28,27 @@ export default function BlogManagement() {
   }, []);
 
   const handleDelete = async (id) => {
-    if (confirm("Are you sure you want to delete this blog?")) {
-      await fetch(`${apiUrl}/blogs/${id}`, { method: "DELETE" });
+    if (!confirm("Are you sure you want to delete this blog?")) return;
+    
+    try {
+      const res = await fetch(`${apiUrl}/blogs/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete blog");
       fetchBlogs();
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      alert("Failed to delete blog. Please try again.");
     }
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-semibold text-gray-800">Manage Blogs</h1>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">Manage Blogs</h1>
         <button
           onClick={() => router.push("/admin/dashboard/blog/add-blog")}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
+          className="bg-blue-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg hover:bg-blue-700 transition-all font-medium w-full sm:w-auto"
         >
-          + Add New
+          + Add New Blog
         </button>
       </div>
 
@@ -51,9 +65,12 @@ export default function BlogManagement() {
             >
               {blog.featuredImage && (
                 <img
-                  src={`${blog.featuredImage}`}
+                  src={blog.featuredImage.startsWith("http") ? blog.featuredImage : `${apiUrl}/uploads/${blog.featuredImage}`}
                   alt={blog.title}
                   className="h-48 w-full object-cover"
+                  onError={(e) => {
+                    e.target.src = "/img/home/product-img.png";
+                  }}
                 />
               )}
               <div className="p-4">

@@ -59,7 +59,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 sm:p-2 text-green-primary hover:text-[var(--primary)] transition-all duration-300"
+              className="lg:hidden p-1.5 sm:p-2 text-green-primary hover:text-[var(--primary)] transition-all duration-300 flex-shrink-0"
               aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? (
@@ -68,15 +68,17 @@ export default function Header() {
                 <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
               )}
             </button>
+            {/* Download Button - Icon only on mobile, full text on sm+ */}
             <a
               href="/brochure/1-1.pdf"
               download
-              className="bg-brand-red hover:bg-brand-red/90 text-white font-medium px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 xl:px-8 xl:py-3.5 2xl:px-10 2xl:py-4 rounded-xl sm:rounded-2xl inline-flex items-center gap-2 transition text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl"
+              className="bg-brand-red hover:bg-brand-red/90 text-white font-medium rounded-xl sm:rounded-2xl inline-flex items-center gap-1.5 sm:gap-2 transition-all duration-300 p-2 sm:px-3 sm:py-2 md:px-4 md:py-2.5 lg:px-6 lg:py-3 flex-shrink-0"
+              aria-label="Download Brochure"
             >
-              <CommonButton
-                label="Download Brochure"
-                className="sm:!py-[10px] sm:!px-8 lg:block hidden"
-              />
+              <FiDownload className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
+              <span className="hidden sm:inline text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap">
+                Download Brochure
+              </span>
             </a>
           </div>
         </div>
@@ -100,7 +102,11 @@ export default function Header() {
           <div className="mt-6 sm:mt-8">
             <CommonButton
               label="Download Brochure"
-              className="sm:!py-[10px] sm:!px-8 w-full sm:w-auto"
+              href="/brochure/1-1.pdf"
+              download
+              onClick={() => setMobileMenuOpen(false)}
+              leadingIcon={<FiDownload className="w-5 h-5" />}
+              className="w-full sm:w-auto"
             />
           </div>
         </div>

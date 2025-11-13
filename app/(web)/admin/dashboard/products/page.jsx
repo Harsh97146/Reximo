@@ -13,16 +13,19 @@ export default function AdminProductsWithModal() {
   const [datasheetFiles, setDatasheetFiles] = useState([]);
   const [datasheetPreviews, setDatasheetPreviews] = useState([]);
 
-  const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/products` || "http://localhost:3001/api/products";
+  const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+  const API_URL = `${BASE_API_URL}/products`;
 
   // Fetch products
   const fetchProducts = async () => {
     try {
       const res = await fetch(API_URL);
+      if (!res.ok) throw new Error("Failed to fetch products");
       const data = await res.json();
       setProducts(data);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching products:", err);
+      setProducts([]);
     }
   };
 
@@ -113,7 +116,7 @@ export default function AdminProductsWithModal() {
       formData.append("name", form.name ?? "");
       formData.append("category", form.category ?? "");
       formData.append("otherData", form.otherData ?? "");
-      formData.append("isFeatured", form.isFeatured ? "true" : "false"); // ✅ added
+      formData.append("isFeatured", form.isFeatured ? "true" : "false");
 
       [
         "advantages",
@@ -147,23 +150,28 @@ export default function AdminProductsWithModal() {
       // Append datasheet files
       datasheetFiles.forEach((file) => formData.append("datasheet", file));
 
-      if (editingId) {
-        await fetch(`${API_URL}/${editingId}`, { method: "PUT", body: formData });
-      } else {
-        await fetch(API_URL, { method: "POST", body: formData });
+      const url = editingId ? `${API_URL}/${editingId}` : API_URL;
+      const method = editingId ? "PUT" : "POST";
+      
+      const res = await fetch(url, { method, body: formData });
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || `Failed to ${editingId ? "update" : "create"} product`);
       }
 
       // Reset form
-      setForm({ category: "", isFeatured: false }); // ✅ added
+      setForm({ category: "", isFeatured: false });
       setFiles([]);
       setPreviewImages([]);
       setDatasheetFiles([]);
       setDatasheetPreviews([]);
       setEditingId(null);
       setShowModal(false);
-      fetchProducts();
+      await fetchProducts();
     } catch (err) {
-      console.error(err);
+      console.error("Error saving product:", err);
+      alert(err.message || "Failed to save product. Please try again.");
     }
   };
 
@@ -182,10 +190,10 @@ export default function AdminProductsWithModal() {
     setShowModal(true);
 
     const backendImages =
-      product.images?.map((img) => (img.startsWith("http") ? img : `${API_URL}${img}`)) || [];
+      product.images?.map((img) => (img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`)) || [];
 
     const endImagePreviews =
-      product.endImage?.map((img) => (img.startsWith("http") ? img : `${API_URL}${img}`)) || [];
+      product.endImage?.map((img) => (img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`)) || [];
 
     setPreviewImages([...backendImages, ...endImagePreviews]);
 
@@ -198,10 +206,15 @@ export default function AdminProductsWithModal() {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     try {
-      await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to delete product");
+      }
       fetchProducts();
     } catch (err) {
-      console.error(err);
+      console.error("Error deleting product:", err);
+      alert(err.message || "Failed to delete product. Please try again.");
     }
   };
 
@@ -214,10 +227,10 @@ export default function AdminProductsWithModal() {
   }, [previewImages]);
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Products Management</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Products Management</h1>
         <button
           onClick={() => {
             setShowModal(true);
@@ -228,7 +241,7 @@ export default function AdminProductsWithModal() {
             setDatasheetPreviews([]);
             setEditingId(null);
           }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+          className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-md hover:bg-blue-700 transition-colors font-medium"
         >
           Add New Product
         </button>
@@ -236,16 +249,32 @@ export default function AdminProductsWithModal() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start pt-20 z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-[80%] max-h-[90vh] overflow-auto">
-            <h2 className="text-xl font-semibold mb-4">{editingId ? "Edit Product" : "Add Product"}</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-4xl max-h-[95vh] overflow-y-auto my-4">
+            <div className="flex justify-between items-center mb-4 pb-4 border-b">
+              <h2 className="text-lg sm:text-xl font-semibold">{editingId ? "Edit Product" : "Add Product"}</h2>
+              <button
+                onClick={() => {
+                  setForm({ category: "" });
+                  setFiles([]);
+                  setPreviewImages([]);
+                  setDatasheetFiles([]);
+                  setDatasheetPreviews([]);
+                  setEditingId(null);
+                  setShowModal(false);
+                }}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
 
             <input
               type="text"
               placeholder="Product Name"
               value={form.name || ""}
               onChange={(e) => handleInputChange(e, "name")}
-              className="border p-2 rounded w-full mb-2"
+              className="border border-gray-300 p-2 sm:p-3 rounded-md w-full mb-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
             {/* Category Dropdown */}
@@ -274,39 +303,46 @@ export default function AdminProductsWithModal() {
 
             {/* Packing Details */}
             <div className="mb-6">
-              <h3 className="font-semibold text-lg mb-2">Packing Details</h3>
-              {(form.packingDetails || []).map((item, idx) => (
-                <div key={idx} className="grid grid-cols-3 gap-2 mb-2">
-                  <input
-                    type="text"
-                    placeholder="Packing (e.g. 1kg, 5L)"
-                    value={item.packing || ""}
-                    onChange={(e) => handleInputChange(e, "packingDetails", idx, "packing")}
-                    className="border p-2 rounded"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Price"
-                    value={item.price || ""}
-                    onChange={(e) => handleInputChange(e, "packingDetails", idx, "price")}
-                    className="border p-2 rounded"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Discount Price"
-                    value={item.discountPrice || ""}
-                    onChange={(e) => handleInputChange(e, "packingDetails", idx, "discountPrice")}
-                    className="border p-2 rounded"
-                  />
-                  <button
-                    onClick={() => removePackingDetail(idx)}
-                    className="bg-red-500 text-white px-2 rounded col-span-3"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-              <button onClick={addPackingDetail} className="bg-green-500 text-white px-3 py-1 rounded">
+              <h3 className="font-semibold text-base sm:text-lg mb-3">Packing Details</h3>
+              <div className="space-y-3">
+                {(form.packingDetails || []).map((item, idx) => (
+                  <div key={idx} className="border border-gray-200 rounded-lg p-3 sm:p-4 space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <input
+                        type="text"
+                        placeholder="Packing (e.g. 1kg, 5L)"
+                        value={item.packing || ""}
+                        onChange={(e) => handleInputChange(e, "packingDetails", idx, "packing")}
+                        className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                      <input
+                        type="number"
+                        placeholder="Price"
+                        value={item.price || ""}
+                        onChange={(e) => handleInputChange(e, "packingDetails", idx, "price")}
+                        className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                      <input
+                        type="number"
+                        placeholder="Discount Price"
+                        value={item.discountPrice || ""}
+                        onChange={(e) => handleInputChange(e, "packingDetails", idx, "discountPrice")}
+                        className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <button
+                      onClick={() => removePackingDetail(idx)}
+                      className="w-full sm:w-auto bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors text-sm font-medium"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button 
+                onClick={addPackingDetail} 
+                className="mt-3 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors text-sm font-medium"
+              >
                 + Add Packing Detail
               </button>
             </div>
@@ -395,25 +431,28 @@ export default function AdminProductsWithModal() {
               </div>
             )}
 
+            {/* Featured Checkbox */}
+            <div className="mb-4 flex items-center gap-2 p-3 bg-gray-50 rounded-md">
+              <input
+                type="checkbox"
+                checked={form.isFeatured || false}
+                onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })}
+                id="isFeatured"
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label htmlFor="isFeatured" className="font-medium text-sm sm:text-base cursor-pointer">
+                Mark as Featured Product
+              </label>
+            </div>
+
             {/* Buttons */}
-            <div className="flex gap-2 mt-4">
+            <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-4 border-t">
               <button
                 onClick={handleAddOrUpdate}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
+                className="flex-1 bg-green-600 text-white px-4 py-2 sm:py-3 rounded-md hover:bg-green-700 transition-colors font-medium"
               >
-                {editingId ? "Update" : "Add"}
+                {editingId ? "Update Product" : "Add Product"}
               </button>
-              <div className="mb-4 flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={form.isFeatured || false}
-                  onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })}
-                  id="isFeatured"
-                />
-                <label htmlFor="isFeatured" className="font-medium">
-                  Mark as Featured Product
-                </label>
-              </div>
               <button
                 onClick={() => {
                   setForm({ category: "" });
@@ -424,7 +463,7 @@ export default function AdminProductsWithModal() {
                   setEditingId(null);
                   setShowModal(false);
                 }}
-                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition-colors"
+                className="flex-1 sm:flex-initial bg-gray-400 text-white px-4 py-2 sm:py-3 rounded-md hover:bg-gray-500 transition-colors font-medium"
               >
                 Cancel
               </button>
@@ -433,52 +472,139 @@ export default function AdminProductsWithModal() {
         </div>
       )}
 
-      {/* Products Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden mt-4">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3">Product</th>
-              <th className="px-6 py-3">Other Data</th>
-              <th className="px-6 py-3">Packing Details</th>
-              <th className="px-6 py-3">Images</th>
-              <th className="px-6 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {products.map((p) => (
-              <tr key={p._id}>
-                <td className="px-6 py-4">{p.name}</td>
-                <td className="px-6 py-4">{p.otherData}</td>
-                <td className="px-6 py-4">
-                  {Array.isArray(p.packingDetails)
-                    ? p.packingDetails.map((pd, i) => (
-                      <div key={i}>
-                        {pd.packing} — ₹{pd.price}{" "}
-                        {pd.discountPrice && <span className="text-sm text-green-600">(₹{pd.discountPrice} discounted)</span>}
+      {/* Products Table - Desktop View */}
+      <div className="bg-white rounded-lg shadow overflow-hidden mt-4 hidden lg:block">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Other Data</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Packing Details</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Images</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {products.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500 italic">
+                    No products found
+                  </td>
+                </tr>
+              ) : (
+                products.map((p) => (
+                  <tr key={p._id} className="hover:bg-gray-50">
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{p.name}</td>
+                    <td className="px-4 sm:px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{p.otherData || "-"}</td>
+                    <td className="px-4 sm:px-6 py-4 text-sm text-gray-500">
+                      {Array.isArray(p.packingDetails)
+                        ? p.packingDetails.slice(0, 2).map((pd, i) => (
+                          <div key={i} className="mb-1">
+                            {pd.packing} — ₹{pd.price}{" "}
+                            {pd.discountPrice && <span className="text-xs text-green-600">(₹{pd.discountPrice})</span>}
+                          </div>
+                        ))
+                        : "-"}
+                    </td>
+                    <td className="px-4 sm:px-6 py-4">
+                      <div className="flex gap-1">
+                        {p.images?.slice(0, 2).map((img, i) => (
+                          <div key={i} className="w-12 h-12 relative">
+                            <Image 
+                              src={img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`} 
+                              alt={p.name} 
+                              fill 
+                              className="object-cover rounded" 
+                            />
+                          </div>
+                        ))}
                       </div>
-                    ))
-                    : null}
-                </td>
-                <td className="px-6 py-4 flex gap-1">
-                  {p.images?.map((img, i) => (
-                    <div key={i} className="w-16 h-16 relative">
-                      <Image src={img.startsWith("http") ? img : `${API_URL}${img}`} alt={p.name} fill className="object-cover rounded" />
+                    </td>
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button onClick={() => handleEdit(p)} className="text-blue-600 hover:text-blue-900 mr-3">
+                        Edit
+                      </button>
+                      <button onClick={() => handleDelete(p._id)} className="text-red-600 hover:text-red-900">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Products Cards - Mobile/Tablet View */}
+      <div className="lg:hidden space-y-4 mt-4">
+        {products.length === 0 ? (
+          <div className="p-8 text-center bg-white rounded-lg shadow text-gray-500 italic">
+            No products found
+          </div>
+        ) : (
+          products.map((p) => (
+            <div key={p._id} className="bg-white rounded-lg shadow p-4 sm:p-6">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500 mb-1">Product Name</h3>
+                  <p className="text-base font-semibold text-gray-900">{p.name}</p>
+                </div>
+                {p.otherData && (
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-1">Other Data</h3>
+                    <p className="text-sm text-gray-900 line-clamp-2">{p.otherData}</p>
+                  </div>
+                )}
+                {Array.isArray(p.packingDetails) && p.packingDetails.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Packing Details</h3>
+                    <div className="space-y-1">
+                      {p.packingDetails.map((pd, i) => (
+                        <div key={i} className="text-sm text-gray-900">
+                          {pd.packing} — ₹{pd.price}{" "}
+                          {pd.discountPrice && <span className="text-green-600">(₹{pd.discountPrice} discounted)</span>}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </td>
-                <td className="px-6 py-4">
-                  <button onClick={() => handleEdit(p)} className="text-blue-600 hover:text-blue-900 mr-2">
+                  </div>
+                )}
+                {p.images && p.images.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 mb-2">Images</h3>
+                    <div className="flex gap-2 flex-wrap">
+                      {p.images.slice(0, 3).map((img, i) => (
+                        <div key={i} className="w-20 h-20 relative">
+                          <Image 
+                            src={img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`} 
+                            alt={p.name} 
+                            fill 
+                            className="object-cover rounded" 
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="flex gap-3 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={() => handleEdit(p)}
+                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm font-medium"
+                  >
                     Edit
                   </button>
-                  <button onClick={() => handleDelete(p._id)} className="text-red-600 hover:text-red-900">
+                  <button
+                    onClick={() => handleDelete(p._id)}
+                    className="flex-1 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors text-sm font-medium"
+                  >
                     Delete
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

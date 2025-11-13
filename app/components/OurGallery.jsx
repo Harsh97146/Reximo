@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ImageGalleryImage from "./ul/OurGalleryImage";
 import ProductTitle from "./ul/ProductTitle";
 import CommonButton from "./ul/Button";
@@ -16,19 +16,16 @@ const ImageGallery = () => {
           />
         </div>
         <ImageGalleryImage />
-        <div className="flex flex-col sm:flex-row items-center sm:items-center justify-between gap-4 sm:gap-5 mt-6 sm:mt-8 md:mt-10 lg:mt-12 bg-white p-4 sm:p-5 md:p-6 lg:p-[30px] border border-[rgba(0,0,0,0.10)] rounded-xl sm:rounded-2xl">
-          <h3 className="m-0 text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#282828] font-semibold text-center sm:text-left">Download Brochure</h3>
-          <a
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 sm:gap-5 mt-6 sm:mt-8 md:mt-10 lg:mt-12 bg-white p-4 sm:p-5 md:p-6 lg:p-[30px] border border-[rgba(0,0,0,0.10)] rounded-xl sm:rounded-2xl shadow-sm">
+          <h3 className="m-0 text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#282828] font-semibold text-center lg:text-left">
+            Download Our Latest Brochure
+          </h3>
+          <CommonButton
+            label="Download Brochure"
             href="/brochure/1-1.pdf"
             download
-            className="bg-brand-red hover:bg-brand-red/90 text-white font-medium px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded-xl sm:rounded-2xl inline-flex items-center gap-2 transition text-sm sm:text-base md:text-lg"
-          >
-            <CommonButton
-              label="Download Brochure"
-              className="sm:!py-[10px] sm:!px-8 lg:block hidden"
-            />
-            <span className="lg:hidden">Download</span>
-          </a>
+            className="w-full sm:w-auto text-sm sm:text-base md:text-lg"
+          />
         </div>
       </div>
     </section>

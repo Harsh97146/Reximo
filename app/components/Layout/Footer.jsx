@@ -5,19 +5,23 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "About Us", href: "/about-us" },
+  { label: "Products", href: "/product" },
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact Us", href: "/contact-us" },
 ];
 
 const informationLinks = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms & Conditions", href: "/terms" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms-condition" },
+  { label: "Download Brochure", href: "/brochure/1-1.pdf", download: true },
 ];
 
 const contactInfo = [
-  { label: "./img/items/facebook.png" },
-  { label: "./img/items/instagram.png" },
-  { label: "./img/items/twet.png" },
+  { label: "Facebook", icon: "/img/items/facebook.png", href: "https://www.facebook.com/" },
+  { label: "Instagram", icon: "/img/items/instagram.png", href: "https://www.instagram.com/" },
+  { label: "Twitter", icon: "/img/items/twet.png", href: "https://twitter.com/" },
 ];
 
 const categories = ["Ceramic", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];
@@ -84,7 +88,7 @@ const Footer = () => {
               </div>
             </Link>
             <p className="mt-4 sm:mt-5 md:mt-6 text-sm sm:text-base md:text-lg font-normal text-white w-full max-w-full sm:max-w-[373px] lg:max-w-[400px] xl:max-w-[450px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
+              Rexino Chemical Industries delivers innovative tile fixing, stone care, maintenance, and waterproofing solutions trusted by architects, engineers, and homeowners across India for over three decades.
             </p>
           </div>
 
@@ -94,12 +98,22 @@ const Footer = () => {
             <ul className="flex flex-col gap-2 sm:gap-2.5">
               {[...quickLinks, ...informationLinks].map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm sm:text-base md:text-lg text-white font-normal transition-all duration-300 hover:text-[var(--primary)]"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.download ? (
+                    <a
+                      href={link.href}
+                      download
+                      className="text-sm sm:text-base md:text-lg text-white font-normal transition-all duration-300 hover:text-[var(--primary)]"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm sm:text-base md:text-lg text-white font-normal transition-all duration-300 hover:text-[var(--primary)]"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -175,11 +189,16 @@ const Footer = () => {
             <h3 className="text-[#d1b56c] mb-3 sm:mb-4 md:mb-5 text-lg sm:text-xl md:text-2xl font-semibold">Social Media</h3>
             <ul className="flex items-center gap-2 sm:gap-3 md:gap-4">
               {contactInfo.map((item) => (
-                <li
-                  key={item.label}
-                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center bg-[rgba(255,255,255,0.10)] transition-all duration-300 hover:bg-[var(--primary)] cursor-pointer"
-                >
-                  <img src={item.label} alt="icon" className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px] object-contain" />
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center bg-[rgba(255,255,255,0.10)] transition-all duration-300 hover:bg-[var(--primary)] cursor-pointer"
+                    aria-label={item.label}
+                  >
+                    <img src={item.icon} alt={item.label} className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px] object-contain" />
+                  </a>
                 </li>
               ))}
             </ul>

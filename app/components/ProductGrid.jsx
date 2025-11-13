@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import ProductTitle from "./ul/ProductTitle";
 import CommonButton from "./ul/Button";
 
@@ -49,13 +50,14 @@ const ProductGrid = () => {
         />
         <div className="mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 xl:gap-[30px]">
           {products.map((product, index) => (
-            <div
-              key={index}
-              className="w-full p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl bg-white shadow-[0_0_20px_0_rgba(0,0,0,0.06)] relative overflow-hidden hover:[&:hover_.hover-none]:opacity-5 transition-all duration-300 hover:shadow-lg"
+            <Link
+              key={product._id || index}
+              href={`/product/${product._id}`}
+              className="w-full p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl bg-white shadow-[0_0_20px_0_rgba(0,0,0,0.06)] relative overflow-hidden hover:[&:hover_.hover-none]:opacity-5 transition-all duration-300 hover:shadow-lg cursor-pointer block"
             >
               <div className="w-full rounded-xl sm:rounded-2xl h-[140px] sm:h-[180px] md:h-[220px] lg:h-[260px] xl:h-[280px] 2xl:h-[320px] bg-[#f9f9f9] overflow-hidden mb-4 sm:mb-5">
                 <img
-                  src={product.endImage[0] || "/img/home/product-img.png"}
+                  src={product.endImage?.[0] || "/img/home/product-img.png"}
                   alt={product.name}
                   className="w-full h-full object-contain"
                 />
@@ -65,7 +67,7 @@ const ProductGrid = () => {
                   {product.name}
                 </h3>
                 <span className="block text-sm sm:text-base md:text-lg font-normal text-[#595959] leading-relaxed">
-                  {product.description[0]}
+                  {product.description?.[0] || "Premium quality product from Rexino"}
                 </span>
               </div>
               <span
@@ -75,11 +77,15 @@ const ProductGrid = () => {
                     "linear-gradient(0deg,rgba(60, 126, 205, 0.35) 0%, rgba(60, 126, 205, 0.18) 33%, rgba(255, 255, 255, 1) 95%)",
                 }}
               ></span>
-            </div>
+            </Link>
           ))}
         </div>
         <div className="flex items-center justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16">
-          <CommonButton label="Contact Us" className="w-fit text-sm sm:text-base md:text-lg" />
+          <CommonButton 
+            label="Contact Us" 
+            href="/contact-us"
+            className="w-fit text-sm sm:text-base md:text-lg" 
+          />
         </div>
       </div>
     </section>

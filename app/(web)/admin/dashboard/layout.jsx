@@ -28,9 +28,9 @@ function DashboardLayoutContent({ children }) {
   return (
     <div className="bg-gray-100 min-h-screen">
       <AdminSidebar />
-      <div className="ml-64 min-h-screen">
+      <div className="lg:ml-64 min-h-screen transition-all duration-300">
         <AdminHeader />
-        <main className="p-6">
+        <main className="p-4 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>

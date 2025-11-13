@@ -30,7 +30,11 @@ const HeroSection = () => {
             Tiling Solution & Waterproofing Solution
           </h1>
           <div className="flex items-center justify-center px-4">
-            <CommonButton label="Contact Us" className="mx-auto text-sm sm:text-base md:text-lg lg:text-xl" />
+            <CommonButton 
+              label="Contact Us" 
+              href="/contact-us"
+              className="mx-auto text-sm sm:text-base md:text-lg lg:text-xl" 
+            />
           </div>
         </div>
       </section>
