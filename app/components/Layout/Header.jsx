@@ -2,31 +2,48 @@
 
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommonButton from "../ul/Button";
 import { FiDownload } from "react-icons/fi";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about-us" },
     { label: "Products", href: "/product" },
     { label: "Blogs", href: "/blog" },
-    { label: "Projects ", href: "/projects" },
+    { label: "Projects", href: "/projects" },
     { label: "Contact Us", href: "/contact-us" },
   ];
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024); // lg breakpoint
+    };
+
+    handleResize(); // Run on mount
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-[0_4px_10px_0_rgba(0,0,0,0.10)] py-2 sm:py-3 md:py-4 lg:py-4 xl:py-5 2xl:py-6">
       <div className="ct-container">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-[10px] xl:gap-3">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-[10px] xl:gap-3"
+          >
             <div className="relative w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] md:w-[52px] md:h-[52px] lg:w-[58px] lg:h-[58px] xl:w-[64px] xl:h-[64px] 2xl:w-[72px] 2xl:h-[72px]">
               <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/316cb117ddbaffc9ee9b85a6286b81a6217f2006?width=116"
+                src="./img/logo.png"
                 alt="Rexino Logo"
                 className="w-full h-full object-cover"
               />
@@ -55,11 +72,11 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 align-items-center">
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 sm:p-2 text-green-primary hover:text-[var(--primary)] transition-all duration-300 flex-shrink-0"
+              className="md:hidden p-1.5 sm:p-2 text-green-primary hover:text-[var(--primary)] transition-all duration-300 flex-shrink-0"
               aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? (
@@ -68,18 +85,20 @@ export default function Header() {
                 <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
               )}
             </button>
-            {/* Download Button - Icon only on mobile, full text on sm+ */}
-            <a
-              href="/brochure/1-1.pdf"
-              download
-              className="bg-brand-red hover:bg-brand-red/90 text-white font-medium rounded-xl sm:rounded-2xl inline-flex items-center gap-1.5 sm:gap-2 transition-all duration-300 p-2 sm:px-3 sm:py-2 md:px-4 md:py-2.5 lg:px-6 lg:py-3 flex-shrink-0"
-              aria-label="Download Brochure"
-            >
-              <FiDownload className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
-              <span className="hidden sm:inline text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap">
-                Download Brochure
-              </span>
-            </a>
+
+            {/* Download Button - Render only on desktop */}
+            {isDesktop && (
+              <div className="">
+                <CommonButton
+                  label="Download Brochure"
+                  href="/brochure/1-1.pdf"
+                  download
+                  onClick={() => setMobileMenuOpen(false)}
+                  leadingIcon={<FiDownload className="w-5 h-5" />}
+                  className="w-full sm:w-auto"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -33,6 +35,7 @@ const infraData = {
 };
 
 const Footer = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(null);
   const [infraOpen, setInfraOpen] = useState(null);
   const [productsByCategory, setProductsByCategory] = useState({});
@@ -174,7 +177,7 @@ const Footer = () => {
                 {infraOpen === section && (
                   <ul className="mt-1 ml-4 space-y-1">
                     {items.map((item) => (
-                      <li key={item} className="text-sm text-white font-normal hover:text-[var(--primary)]">
+                      <li onClick={() => router.push('/contact-us')} key={item} className="text-sm cursor-pointer text-white font-normal hover:text-[var(--primary)]">
                         {item}
                       </li>
                     ))}

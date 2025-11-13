@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react";
 
 const galleryImages = [
-  "/img/home/blog-1.png",
-  "/img/home/blog-2.png",
-  "/img/home/blog-3.png",
-  "/img/home/blog-1.png",
+  "/img/home/construction-worker-pouring-wet-concret-road-construction-site-1-e1703238135389.jpg",
+  "/img/home/worker-painting-wall-with-roller-construction-site_1048258-11576.jpg",
+  "/img/home/pexels-rezwan-1216589.jpg",
+  "/img/home/construction-worker-pouring-wet-concret-road-construction-site-1-e1703238135389.jpg",
 ];
 
 const ImageGalleryImage = () => {

@@ -13,7 +13,7 @@ const HomeBlog = () => {
       title: "Why Construction Chemicals Matter",
       description:
         "Learn how construction chemicals improve durability, strength, and safety in modern construction. ",
-      img: "/img/home/blog-1.png",
+        featuredImage: "/img/home/construction-worker-pouring-wet-concret-road-construction-site-1-e1703238135389.jpg",
       date: "20 Oct, 2025",
     },
     {
@@ -21,7 +21,7 @@ const HomeBlog = () => {
       title: "Ultimate Guide to Tiling Solutions",
       description:
         "Confused about tile adhesives or grouts? This blog explains different types, how to choose the ..",
-      img: "/img/home/blog-2.png",
+        featuredImage: "/img/home/worker-painting-wall-with-roller-construction-site_1048258-11576.jpg",
       date: "20 Oct, 2025",
     },
     {
@@ -29,7 +29,7 @@ const HomeBlog = () => {
       title: "Stop Leakage Forever! Best Waterproofing ",
       description:
         "Water damage is the biggest enemy of buildings. Discover the latest waterproofing methods for roofs",
-      img: "/img/home/blog-3.png",
+        featuredImage: "/img/home/pexels-rezwan-1216589.jpg",
       date: "20 Oct, 2025",
     },
   ];
@@ -73,7 +73,7 @@ const HomeBlog = () => {
           {displayedBlogs.map((blog, index) => (
             <div
               key={index}
-              onClick={() => handleBlogClick(blog._id)}
+              // onClick={() => handleBlogClick(blog._id)}
               className="cursor-pointer w-full rounded-xl sm:rounded-2xl bg-white shadow-[0_0_20px_0_rgba(0,0,0,0.06)] relative overflow-hidden h-full transition-all duration-300 hover:shadow-lg [&:hover_.card-img]:scale-[1.05]"
             >
               <div className="w-full rounded-sm h-[140px] sm:h-[180px] md:h-[220px] lg:h-[260px] xl:h-[280px] 2xl:h-[320px] bg-[#f9f9f9] overflow-hidden">
