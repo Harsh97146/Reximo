@@ -43,7 +43,7 @@ export default function Header() {
           >
             <div className="relative w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] md:w-[52px] md:h-[52px] lg:w-[58px] lg:h-[58px] xl:w-[64px] xl:h-[64px] 2xl:w-[72px] 2xl:h-[72px]">
               <img
-                src="./img/logo.png"
+                src="/img/logo.png"
                 alt="Rexino Logo"
                 className="w-full h-full object-cover"
               />
