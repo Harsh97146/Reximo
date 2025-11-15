@@ -78,7 +78,7 @@ const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-2 xl:col-span-2">
             <Link href="/" className="flex items-center gap-2 sm:gap-2.5 lg:gap-[10px] xl:gap-3">
               <div className="relative w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] md:w-[52px] md:h-[52px] lg:w-[58px] lg:h-[58px] xl:w-[64px] xl:h-[64px]">
-                <img src="./img/logo.png" alt="Rexino Logo" className="w-full h-full object-cover" />
+                <img src="/img/logo.png" alt="Rexino Logo" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 rounded-[120px] bg-blue-secondary mix-blend-hue" />
               </div>
               <div className="flex flex-col">
