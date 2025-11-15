@@ -105,7 +105,7 @@ const ContactUsSection = () => {
 
       <div className="mt-12 sm:mt-16 lg:mt-20">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.494491862561!2d72.8651103753632!3d21.24845487921168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f94583ebc79%3A0x42aae82b621c312d!2sSachin%20GIDC!5e0!3m2!1sen!2sin!4v1699796640942!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.1418985896235!2d72.9029187!3d21.226221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0456c9743a7c7%3A0x1282b887c2908092!2sRexino%20Chemical!5e0!3m2!1sen!2sin!4v1763213966795!5m2!1sen!2sin"
           title="Rexino Chemical Industries Location"
           className="w-full h-[300px] sm:h-[380px] lg:h-[420px] border-0"
           loading="lazy"

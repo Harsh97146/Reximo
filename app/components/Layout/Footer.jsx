@@ -22,9 +22,9 @@ const informationLinks = [
 ];
 
 const contactInfo = [
-  { label: "Facebook", icon: "/img/items/facebook.png", href: "https://www.facebook.com/" },
-  { label: "Instagram", icon: "/img/items/instagram.png", href: "https://www.instagram.com/" },
-  { label: "Twitter", icon: "/img/items/twet.png", href: "https://twitter.com/" },
+  // { label: "Facebook", icon: "/img/items/facebook.png", href: "https://www.facebook.com/" },
+  { label: "Instagram", icon: "/img/items/instagram.png", href: "https://www.instagram.com/rexino_chemical/" },
+  { label: "Google", icon: "/img/items/google-map-icon.webp", href: "https://maps.app.goo.gl/6j2azcdUGt5YYWag7?g_st=awb" },
 ];
 
 const categories = ["Ceramic", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];

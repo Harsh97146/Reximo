@@ -4,21 +4,32 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Header from "./Layout/Header";
 import DetailSectionItem from "./DetailSectionItem";
-import { FaArrowLeft, FaBoxOpen, FaTags, FaInfoCircle } from "react-icons/fa";
+import { FaArrowLeft, FaBoxOpen, FaTags, FaInfoCircle, FaDownload } from "react-icons/fa";
 
-const ProductPackingCard = ({ pack }) => (
-  <div className="group border rounded-xl p-4 shadow bg-white flex flex-col items-start gap-3 transition-all hover:shadow-lg">
-    <p className="font-semibold text-lg">{pack.packing}</p>
-    <div className="flex items-center gap-2">
-      <span className="text-xl font-bold text-brand-red">₹{pack.discountPrice}</span>
-      {!!pack.discountPrice &&
-        <span className="text-sm text-green-600 line-through">₹{pack.price}</span>}
+const ProductPackingCard = ({ pack }) => {
+  const hasDiscount = !!pack.discountPrice;
+
+  return (
+    <div className="group border rounded-xl p-4 shadow bg-white flex flex-col items-start gap-3 transition-all hover:shadow-lg">
+      <p className="font-semibold text-lg">{pack.packing}</p>
+
+      <div className="flex items-center gap-2">
+        {hasDiscount ? (
+          <>
+            <span className="text-xl font-bold text-brand-red">₹{pack.discountPrice}</span>
+            <span className="text-sm text-green-600 line-through">₹{pack.price}</span>
+          </>
+        ) : (
+          <span className="text-xl font-bold text-brand-red">₹{pack.price}</span>
+        )}
+      </div>
+
+      <button className="inline-block mt-2 bg-brand-red text-white px-5 py-1.5 rounded hover:bg-brand-red/90 transition font-medium">
+        Enquire
+      </button>
     </div>
-    <button className="inline-block mt-2 bg-brand-red text-white px-5 py-1.5 rounded hover:bg-brand-red/90 transition font-medium">
-      Enquire
-    </button>
-  </div>
-);
+  );
+};
 
 const DetailSection = ({ id }) => {
   const [product, setProduct] = useState(null);
@@ -70,7 +81,7 @@ const DetailSection = ({ id }) => {
 
       {/* Main Images Gallery */}
       {product.endImage && product.endImage.length > 0 && (
-        <section className="max-w-3xl mx-auto px-4 my-10">
+        <section className="max-w-3xl mx-auto px-4 my-10 py-20">
           <h3 className="flex items-center text-2xl font-semibold mb-3">
             <FaBoxOpen className="mr-2" /> Images
           </h3>
@@ -82,6 +93,16 @@ const DetailSection = ({ id }) => {
               </div>
             )}
           </div>
+        </section>
+      )}
+
+      {/* Main Images Gallery */}
+      {product.standards && product.standards.length > 0 && (
+        <section className="max-w-3xl mx-auto px-4 my-10">
+          <h3 className="flex items-center text-2xl font-semibold mb-3">
+            <FaBoxOpen className="mr-2" /> Standards : {product.standards.join(", ")}
+          </h3>
+          <div className="h-1 w-16 bg-brand-red rounded mb-6"></div>
         </section>
       )}
 
@@ -116,6 +137,34 @@ const DetailSection = ({ id }) => {
         <DetailSectionItem title="Storage" data={product.storage} />
         <DetailSectionItem title="Shelf Life" data={product.shelfLife} />
       </div>
+
+      {product.datasheet && product.datasheet.length > 0 && (
+        <section className="max-w-3xl mx-auto px-4 my-10">
+          <h3 className="flex items-center text-2xl font-semibold mb-3">
+            <FaInfoCircle className="mr-2" /> Datasheets
+          </h3>
+          <div className="h-1 w-16 bg-brand-red rounded mb-6"></div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {product.datasheet.map((file, idx) => {
+              const base = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+              const url = file.startsWith("http") ? file : `${base}${file.startsWith("/") ? file : `/${file}`}`;
+              const name = (file || "").split("/").pop();
+              return (
+                <li key={idx} className="flex items-center justify-between border rounded-lg p-3 bg-white shadow">
+                  <span className="text-sm font-medium truncate mr-3">{name || `Datasheet ${idx + 1}`}</span>
+                  <a
+                    href={url}
+                    download
+                    className="flex items-center gap-2 bg-gray-100 text-brand-red px-3 py-1.5 rounded hover:bg-gray-200 transition"
+                  >
+                    <FaDownload /> Download
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
 
       {/* Sticky Bottom Action Bar for Mobile */}
       <div className="fixed md:hidden bottom-0 left-0 right-0 bg-white shadow flex justify-around py-2 px-3 z-50">
