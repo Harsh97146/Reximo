@@ -14,7 +14,7 @@ export default function DealersManagement() {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const API_URL = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"}/dealers`;
+  const API_URL = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/dealers`;
 
   // ✅ Fetch all dealers
   const fetchDealers = async () => {

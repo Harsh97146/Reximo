@@ -6,7 +6,7 @@ import Header from "./Layout/Header";
 import DetailSectionItem from "./DetailSectionItem";
 import { FaArrowLeft, FaBoxOpen, FaTags, FaInfoCircle } from "react-icons/fa";
 
-const ProductPackingCard = ({pack}) => (
+const ProductPackingCard = ({ pack }) => (
   <div className="group border rounded-xl p-4 shadow bg-white flex flex-col items-start gap-3 transition-all hover:shadow-lg">
     <p className="font-semibold text-lg">{pack.packing}</p>
     <div className="flex items-center gap-2">
@@ -78,7 +78,7 @@ const DetailSection = ({ id }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {product.endImage.map((img, idx) =>
               <div key={idx} className="relative w-full h-64 md:h-72 rounded-lg shadow-lg overflow-hidden">
-                <Image src={img} alt={`Product Image ${idx+1}`} fill className="object-cover"/>
+                <Image src={img} alt={`Product Image ${idx + 1}`} fill className="object-cover" />
               </div>
             )}
           </div>
@@ -89,12 +89,12 @@ const DetailSection = ({ id }) => {
       {product.packingDetails && product.packingDetails.length > 0 && (
         <section className="max-w-3xl mx-auto px-4 my-10">
           <h3 className="flex items-center text-2xl font-semibold mb-3">
-            <FaTags className="mr-2" /> Packing Details
+            <FaTags className="mr-2" /> Packging Sizes
           </h3>
           <div className="h-1 w-16 bg-brand-red rounded mb-6"></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {product.packingDetails.map((pack, idx) =>
-              <ProductPackingCard key={idx} pack={pack}/>
+              <ProductPackingCard key={idx} pack={pack} />
             )}
           </div>
         </section>
@@ -102,20 +102,19 @@ const DetailSection = ({ id }) => {
 
       {/* Collapsible product specs */}
       <div className="max-w-3xl mx-auto px-4 my-6">
-        <DetailSectionItem title="Description" data={product.description}/>
-        <DetailSectionItem title="Use" data={product.uses}/>
-        <DetailSectionItem title="Use By" data={product.useBy}/>
-        <DetailSectionItem title="Advantages" data={product.advantages}/>
-        <DetailSectionItem title="Application" data={product.application}/>
-        <DetailSectionItem title="How To Apply" data={product.howToApply}/>
-        <DetailSectionItem title="Areas Of Application" data={product.areasOfApplication}/>
-        <DetailSectionItem title="Methods Of Application" data={product.methodOfApplication}/>
-        <DetailSectionItem title="Precautions" data={product.precautions}/>
-        <DetailSectionItem title="Standards" data={product.standards}/>
-        <DetailSectionItem title="Storage" data={product.storage}/>
-        <DetailSectionItem title="Colour" data={product.colour}/>
-        <DetailSectionItem title="Coverage" data={product.coverage}/>
-        <DetailSectionItem title="Shelf Life" data={product.shelfLife}/>
+        <DetailSectionItem title="Description" data={product.description} />
+        <DetailSectionItem title="Advantages" data={product.advantages} />
+        <DetailSectionItem title="Application" data={product.application} />
+        <DetailSectionItem title="Areas Of Application" data={product.areasOfApplication} />
+        <DetailSectionItem title="Methods Of Application" data={product.methodOfApplication} />
+        <DetailSectionItem title="Precautions" data={product.precautions} />
+        <DetailSectionItem title="How To Apply" data={product.howToApply} />
+        <DetailSectionItem title="Use" data={product.uses} />
+        <DetailSectionItem title="Use By" data={product.useBy} />
+        <DetailSectionItem title="Coverage" data={product.coverage} />
+        <DetailSectionItem title="Colour" data={product.colour} />
+        <DetailSectionItem title="Storage" data={product.storage} />
+        <DetailSectionItem title="Shelf Life" data={product.shelfLife} />
       </div>
 
       {/* Sticky Bottom Action Bar for Mobile */}

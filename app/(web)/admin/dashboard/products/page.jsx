@@ -152,9 +152,9 @@ export default function AdminProductsWithModal() {
 
       const url = editingId ? `${API_URL}/${editingId}` : API_URL;
       const method = editingId ? "PUT" : "POST";
-      
+
       const res = await fetch(url, { method, body: formData });
-      
+
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         throw new Error(errorData.message || `Failed to ${editingId ? "update" : "create"} product`);
@@ -294,16 +294,9 @@ export default function AdminProductsWithModal() {
               </select>
             </div>
 
-            <textarea
-              placeholder="Other Data (HTML/notes)"
-              value={form.otherData || ""}
-              onChange={(e) => handleInputChange(e, "otherData")}
-              className="border p-2 rounded w-full mb-4"
-            />
-
             {/* Packing Details */}
             <div className="mb-6">
-              <h3 className="font-semibold text-base sm:text-lg mb-3">Packing Details</h3>
+              <h3 className="font-semibold text-base sm:text-lg mb-3">Packing Size</h3>
               <div className="space-y-3">
                 {(form.packingDetails || []).map((item, idx) => (
                   <div key={idx} className="border border-gray-200 rounded-lg p-3 sm:p-4 space-y-3">
@@ -339,8 +332,8 @@ export default function AdminProductsWithModal() {
                   </div>
                 ))}
               </div>
-              <button 
-                onClick={addPackingDetail} 
+              <button
+                onClick={addPackingDetail}
                 className="mt-3 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors text-sm font-medium"
               >
                 + Add Packing Detail
@@ -349,30 +342,30 @@ export default function AdminProductsWithModal() {
 
             {/* Array Fields */}
             {[
+              "standards",
               "description",
               "advantages",
-              "precautions",
-              "howToApply",
-              "shelfLife",
-              "colour",
-              "coverage",
               "application",
               "areasOfApplication",
               "methodOfApplication",
+              "precautions",
+              "howToApply",
               "uses",
-              "standards",
-              "storage",
               "useBy",
+              "coverage",
+              "colour",
+              "storage",
+              "shelfLife",
             ].map((key) => (
               <div key={key} className="mb-4">
                 <h3 className="font-semibold">{key}</h3>
                 {(form[key] || []).map((item, idx) => (
                   <div key={idx} className="flex gap-2 mb-1">
-                    <input
-                      type="text"
+                    <textarea
                       value={item}
                       onChange={(e) => handleInputChange(e, key, idx)}
                       className="border p-1 rounded flex-1"
+                      rows={3}
                     />
                     <button
                       onClick={() => removeArrayField(key, idx)}
@@ -511,11 +504,11 @@ export default function AdminProductsWithModal() {
                       <div className="flex gap-1">
                         {p.images?.slice(0, 2).map((img, i) => (
                           <div key={i} className="w-12 h-12 relative">
-                            <Image 
-                              src={img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`} 
-                              alt={p.name} 
-                              fill 
-                              className="object-cover rounded" 
+                            <Image
+                              src={img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`}
+                              alt={p.name}
+                              fill
+                              className="object-cover rounded"
                             />
                           </div>
                         ))}
@@ -576,11 +569,11 @@ export default function AdminProductsWithModal() {
                     <div className="flex gap-2 flex-wrap">
                       {p.images.slice(0, 3).map((img, i) => (
                         <div key={i} className="w-20 h-20 relative">
-                          <Image 
-                            src={img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`} 
-                            alt={p.name} 
-                            fill 
-                            className="object-cover rounded" 
+                          <Image
+                            src={img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`}
+                            alt={p.name}
+                            fill
+                            className="object-cover rounded"
                           />
                         </div>
                       ))}

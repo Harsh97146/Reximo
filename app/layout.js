@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Rexino: Trusted Name in Ceramic & Construction Chemicals",
+  title: "Rexino Chemical: Trusted Name in tiling, Waterproofing & construction chemicals",
   description:
     "Rexino has over 3 decades of experience in the ceramic and construction chemicals field, delivering a comprehensive range of Tile Fixing, Stone Fixing, Building Repair, Grouting Solutions, and Waterproofing products.",
 };

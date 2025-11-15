@@ -47,15 +47,12 @@ export default function Header() {
                 alt="Rexino Logo"
                 className="w-full h-full object-cover"
               />
+              <span className="text-green-primary font-bold text-[9px] sm:text-[12px] md:text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] leading-tight font-dm-sans">
+                Chemical
+              </span>
               <div className="absolute inset-0 rounded-[120px] bg-blue-secondary mix-blend-hue" />
             </div>
             <div className="flex flex-col">
-              <span className="text-green-primary font-bold text-[14px] sm:text-[18px] md:text-[20px] lg:text-[21px] xl:text-[24px] 2xl:text-[28px] leading-tight font-dm-sans">
-                Rexino
-              </span>
-              <span className="text-green-primary font-normal text-[9px] sm:text-[12px] md:text-[13px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] leading-tight font-dm-sans">
-                Chemical Industries
-              </span>
             </div>
           </Link>
 

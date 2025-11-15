@@ -12,6 +12,7 @@ const quickLinks = [
   { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
   { label: "Contact Us", href: "/contact-us" },
+  { label: "Dealers", href: "/dealers" },
 ];
 
 const informationLinks = [
@@ -210,7 +211,7 @@ const Footer = () => {
       </div>
 
       <div className="p-3 sm:p-4 md:p-5 w-full text-xs sm:text-sm md:text-base text-white font-normal text-center bg-[rgba(255,255,255,0.04)] mt-8 sm:mt-12 md:mt-14 lg:mt-16">
-        Copyright @{year} rexino. All Rights Reserved.
+        Copyright @2007 rexino. All Rights Reserved.
       </div>
     </footer>
   );

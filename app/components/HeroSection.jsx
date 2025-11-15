@@ -15,7 +15,7 @@ const HeroSection = () => {
               }}
             ></div>
             <span className="font-semibold text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl uppercase text-[#d1b56c]">
-              Rexino
+              <img src="/img/logo.png" alt="Rexino" className="w-80 h-80" />
             </span>
             <div
               className="w-12 sm:w-16 md:w-20 lg:w-[96px] xl:w-[120px] h-[2px] sm:h-[3px] rounded-2xl"
@@ -30,10 +30,10 @@ const HeroSection = () => {
             Tiling Solution & Waterproofing Solution
           </h1>
           <div className="flex items-center justify-center px-4">
-            <CommonButton 
-              label="Contact Us" 
+            <CommonButton
+              label="Contact Us"
               href="/contact-us"
-              className="mx-auto text-sm sm:text-base md:text-lg lg:text-xl" 
+              className="mx-auto text-sm sm:text-base md:text-lg lg:text-xl"
             />
           </div>
         </div>

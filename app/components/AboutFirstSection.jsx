@@ -74,13 +74,13 @@ const AboutFirstSection = () => {
             <span className="text-[var(--primary)]">Excellence & Innovation</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
-            For over three decades, Rexino has been an integral part of homes, offices, and industries across India and beyond. 
+            For over three decades, Rexino has been an integral part of homes, offices, and industries across India and beyond.
             We are a trusted name in the ceramic and construction chemicals field, combining beauty with endurance and a legacy built on trust.
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 sm:mb-20 md:mb-24">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 sm:mb-20 md:mb-24">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -103,7 +103,7 @@ const AboutFirstSection = () => {
               </div>
             );
           })}
-        </div>
+        </div> */}
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center mb-16 sm:mb-20">
@@ -120,12 +120,12 @@ const AboutFirstSection = () => {
                   <strong className="text-gray-900">Building Repair</strong>,{" "}
                   <strong className="text-gray-900">Grouting Solutions</strong>, and{" "}
                   <strong className="text-gray-900">Waterproofing</strong>. With our ground-breaking{" "}
-                  <strong className="text-gray-900">Non-Skid Adhesive (NSA)</strong>, we are revolutionizing 
+                  <strong className="text-gray-900">Non-Skid Adhesive (NSA)</strong>, we are revolutionizing
                   the concept of tile-on-tile applications in India.
                 </p>
                 <p>
-                  Backed by continuous research and development, and supported by a wide network of dealers and stockists, 
-                  Rexino delivers timely, high-quality solutions for residential, commercial, industrial, and infrastructural projects. 
+                  Backed by continuous research and development, and supported by a wide network of dealers and stockists,
+                  Rexino delivers timely, high-quality solutions for residential, commercial, industrial, and infrastructural projects.
                   We are committed to helping homeowners, architects, and builders turn their vision into reality with confidence and durability.
                 </p>
               </div>
@@ -175,7 +175,7 @@ const AboutFirstSection = () => {
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Our Mission</h3>
             <p className="text-base sm:text-lg text-blue-100 leading-relaxed">
-              To deliver world-class ceramic and construction chemical solutions that combine beauty with endurance, 
+              To deliver world-class ceramic and construction chemical solutions that combine beauty with endurance,
               helping our customers build lasting structures with confidence and reliability.
             </p>
           </div>
@@ -186,14 +186,14 @@ const AboutFirstSection = () => {
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Our Vision</h3>
             <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-              To be India's most trusted and innovative leader in ceramic and construction chemicals, 
+              To be India's most trusted and innovative leader in ceramic and construction chemicals,
               setting new standards for quality, sustainability, and customer satisfaction.
             </p>
           </div>
         </div>
 
         {/* Timeline Section */}
-        <div className="mb-16 sm:mb-20">
+        {/* <div className="mb-16 sm:mb-20">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Our Journey
@@ -203,16 +203,15 @@ const AboutFirstSection = () => {
             </p>
           </div>
           <div className="relative">
-            {/* Timeline Line */}
+            Timeline Line
             <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-[var(--primary)] to-blue-600"></div>
-            
+
             <div className="space-y-8 sm:space-y-12">
               {milestones.map((milestone, index) => (
                 <div
                   key={index}
-                  className={`flex flex-col md:flex-row items-center gap-6 sm:gap-8 ${
-                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
+                  className={`flex flex-col md:flex-row items-center gap-6 sm:gap-8 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    }`}
                 >
                   <div className={`w-full md:w-5/12 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
                     <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
@@ -227,20 +226,20 @@ const AboutFirstSection = () => {
                       </p>
                     </div>
                   </div>
-                  
-                  {/* Timeline Dot */}
+
+                  Timeline Dot
                   <div className="hidden md:flex w-2/12 justify-center">
                     <div className="w-4 h-4 rounded-full bg-[var(--primary)] border-4 border-white shadow-lg z-10"></div>
                   </div>
-                  
+
                   <div className={`w-full md:w-5/12 ${index % 2 === 0 ? "md:text-left" : "md:text-right"}`}>
-                    {/* Empty space for alignment */}
+                    Empty space for alignment
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

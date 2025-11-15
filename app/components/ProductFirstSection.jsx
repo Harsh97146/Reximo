@@ -18,13 +18,13 @@ const ProductFirstSection = () => {
             <span className="text-[var(--primary)]"> Chemical Solutions</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
-            Discover our comprehensive range of high-quality ceramic and construction chemicals, 
+            Discover our comprehensive range of high-quality ceramic and construction chemicals,
             trusted by professionals for over three decades
           </p>
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-10 sm:mb-12 md:mb-16">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-10 sm:mb-12 md:mb-16">
           <div className="text-center p-4 sm:p-6 bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100">
             <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--primary)] mb-2">30+</div>
             <div className="text-xs sm:text-sm md:text-base text-gray-600">Years Experience</div>
@@ -41,7 +41,7 @@ const ProductFirstSection = () => {
             <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--primary)] mb-2">50+</div>
             <div className="text-xs sm:text-sm md:text-base text-gray-600">Cities Served</div>
           </div>
-        </div>
+        </div> */}
 
         {/* Content Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
@@ -66,7 +66,7 @@ const ProductFirstSection = () => {
                 and industrial projects alike.
               </p>
             </div>
-            
+
             {/* Features */}
             <div className="grid grid-cols-2 gap-4 pt-4">
               <div className="flex items-start gap-3">
