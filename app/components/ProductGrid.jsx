@@ -83,7 +83,7 @@ const ProductGrid = () => {
         <div className="flex items-center justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16">
           <CommonButton 
             label="View more products" 
-            href="/products"
+            href="/product"
             className="w-fit text-sm sm:text-base md:text-lg" 
           />
         </div>
