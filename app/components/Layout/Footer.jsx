@@ -27,7 +27,7 @@ const contactInfo = [
   { label: "Google", icon: "/img/items/google-map-icon.webp", href: "https://maps.app.goo.gl/6j2azcdUGt5YYWag7?g_st=awb" },
 ];
 
-const categories = ["Ceramic", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];
+const categories = ["Tiling Solution", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];
 
 // 🏭 New static data for Manufacturing & Warehouse
 const infraData = {

@@ -51,6 +51,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem("adminToken");
     localStorage.removeItem("adminUser");
+    document.cookie = "adminToken=; path=/; max-age=0";
     setUser(null);
     router.push("/admin/login");
   };

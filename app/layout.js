@@ -15,11 +15,35 @@ export const metadata = {
   title: "Rexino Chemical: Trusted Name in tiling, Waterproofing & construction chemicals",
   description:
     "Rexino has over 3 decades of experience in the ceramic and construction chemicals field, delivering a comprehensive range of Tile Fixing, Stone Fixing, Building Repair, Grouting Solutions, and Waterproofing products.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* 🔥 Google Organization Logo Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Rexino Chemical",
+              url: "https://rexinochemical.com",
+              logo: "https://rexinochemical.com/logo.png", // ← change to your main square logo
+            }),
+          }}
+        />
+
+        {/* Optional but recommended */}
+        <link rel="manifest" href="/manifest.json" />
+      </head>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-brandRed`}
       >

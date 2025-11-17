@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import { Search, X, Grid3x3, List as ListIcon } from "lucide-react";
 
-const categories = ["All", "Ceramic", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];
+const categories = ["All", "Tiling Solution", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];
 
 const List = () => {
   const [products, setProducts] = useState([]);

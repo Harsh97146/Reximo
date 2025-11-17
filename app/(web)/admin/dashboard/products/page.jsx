@@ -218,7 +218,7 @@ export default function AdminProductsWithModal() {
     }
   };
 
-  const categories = ["Ceramic", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];
+  const categories = ["Tiling Solution", "Waterproofing", "Repairs", "Maintenance", "Stonecare"];
 
   useEffect(() => {
     return () => {
