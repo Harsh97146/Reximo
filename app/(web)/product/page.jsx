@@ -2,6 +2,7 @@
 import List from "./../../components/List";
 import ProductFirstSection from "./../../components/ProductFirstSection";
 import React, { useEffect } from "react";
+import { Suspense } from "react";
 
 const ProductPage = () => {
   useEffect(() => {
