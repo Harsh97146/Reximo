@@ -92,7 +92,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
 
-      <section className="space-y-2">
+      {/* <section className="space-y-2">
         <h2 className="text-2xl font-semibold text-[#1D1D1F]">Contact Rexino</h2>
         <p>
           For questions about this policy or to exercise your data rights, contact our compliance
@@ -106,7 +106,7 @@ const PrivacyPolicy = () => {
           </a>
           . We are headquartered at Plot No. 29, Vraj Industrial Park, Sachin GIDC, Surat, India.
         </p>
-      </section>
+      </section> */}
     </div>
   );
 };

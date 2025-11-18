@@ -54,7 +54,7 @@ const ProjectDetailsSection = () => {
             {project.title}
           </h1>
           <span className="text-gray-500 text-sm md:text-base">
-            Done by: <strong>{project.doneBy}</strong>
+            Approved By: <strong>{project.doneBy}</strong>
           </span>
         </div>
 

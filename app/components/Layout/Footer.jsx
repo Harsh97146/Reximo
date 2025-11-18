@@ -32,7 +32,7 @@ const categories = ["Tiling Solution", "Waterproofing", "Repairs", "Maintenance"
 // 🏭 New static data for Manufacturing & Warehouse
 const infraData = {
   Manufacturing: ["Unit - 1 Gujarat", "Unit - 2 Maharashtra"],
-  Warehouse: ["Surat"],
+  // Warehouse: ["Surat"],
 };
 
 const Footer = () => {
@@ -60,11 +60,8 @@ const Footer = () => {
   };
 
   const handleCategoryClick = (category) => {
-    if (open === category) setOpen(null);
-    else {
-      setOpen(category);
-      if (!productsByCategory[category]) fetchProducts(category);
-    }
+    setOpen(null);
+    router.push(`/product?category=${encodeURIComponent(category)}#product-list`);
   };
 
   const handleInfraClick = (section) => {
@@ -207,6 +204,13 @@ const Footer = () => {
               ))}
             </ul>
           </div>
+        </div>
+      </div>
+
+      <div className="space-y-2 w-full justify-center items-center flex flex-col">
+        <div className="mt-3">
+          <div className="text-lg sm:text-xl md:text-2xl font-semibold text-[#d1b56c]">Office:</div>
+          <div className="mt-3">G-44, Vikash Shopper, Bhagavan Nagar Rd, Sarthana Jakat Naka, chowk, Nana Varachha, Surat, Gujarat 395006</div>
         </div>
       </div>
 

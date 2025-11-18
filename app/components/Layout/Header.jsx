@@ -33,7 +33,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-[0_4px_10px_0_rgba(0,0,0,0.10)] py-2 sm:py-3 md:py-4 lg:py-4 xl:py-5 2xl:py-6">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-[0_4px_10px_0_rgba(0,0,0,0.10)] py-6 sm:py-3 md:py-7 lg:py-6 xl:py-5 2xl:py-6">
       <div className="ct-container">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -73,7 +73,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 sm:p-2 text-green-primary hover:text-[var(--primary)] transition-all duration-300 flex-shrink-0"
+              className="lg:hidden p-1.5 sm:p-2 text-green-primary hover:text-[var(--primary)] transition-all duration-300 flex-shrink-0"
               aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? (

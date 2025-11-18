@@ -84,21 +84,6 @@ const TermsCondition = () => {
           terms.
         </p>
       </section>
-
-      <section className="space-y-2">
-        <h2 className="text-2xl font-semibold text-[#1D1D1F]">Contact Information</h2>
-        <p>
-          For clarifications regarding these terms, reach us at{" "}
-          <a href="mailto:info@ino-chemical.com" className="text-brand-red font-semibold">
-            info@ino-chemical.com
-          </a>{" "}
-          or{" "}
-          <a href="tel:+919879566968" className="text-brand-red font-semibold">
-            +91 98795 66968
-          </a>
-          . Our registered office is Plot No. 29, Vraj Industrial Park, Sachin GIDC, Surat, India.
-        </p>
-      </section>
     </div>
   );
 };
