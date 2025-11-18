@@ -17,7 +17,9 @@ const ProductPage = () => {
   return (
     <div>
       <ProductFirstSection />
-      <List />
+      <Suspense>
+        <List />
+      </Suspense>
     </div>
   );
 };
