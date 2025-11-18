@@ -206,6 +206,11 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <div className="flex justify-center items-center gap-4 mt-4 ">
+        <img src="/img/branding/bharat.png" alt="logo" className="w-[100px] h-[100px] object-contain bg-[#3a9fa8] rounded-full p-3" />
+        <img src="/img/branding/iso.png" alt="logo" className="w-[100px] h-[100px] object-contain bg-[#3a9fa8] rounded-full p-3" />
+        <img src="/img/branding/tiger.png" alt="logo" className="w-[100px] h-[100px] object-contain bg-[#3a9fa8] rounded-full p-3" />
+      </div>
 
       <div className="space-y-2 w-full justify-center items-center flex flex-col">
         <div className="mt-3">

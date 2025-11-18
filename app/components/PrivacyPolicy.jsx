@@ -91,22 +91,6 @@ const PrivacyPolicy = () => {
           portfolio. Any updates will be published on this page with an updated effective date.
         </p>
       </section>
-
-      {/* <section className="space-y-2">
-        <h2 className="text-2xl font-semibold text-[#1D1D1F]">Contact Rexino</h2>
-        <p>
-          For questions about this policy or to exercise your data rights, contact our compliance
-          team at{" "}
-          <a href="mailto:info@ino-chemical.com" className="text-brand-red font-semibold">
-            info@ino-chemical.com
-          </a>{" "}
-          or call{" "}
-          <a href="tel:+919879566968" className="text-brand-red font-semibold">
-            +91 98795 66968
-          </a>
-          . We are headquartered at Plot No. 29, Vraj Industrial Park, Sachin GIDC, Surat, India.
-        </p>
-      </section> */}
     </div>
   );
 };

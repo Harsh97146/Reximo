@@ -6,9 +6,9 @@ const DetailSectionItem = ({ title, data, isBtn = false }) => {
   console.log(data, "data");
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
-      <h3 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h3>
+      <h3 className="text-2xl font-semibold text-gray-800 mb-2 bg-[#3A9FA8]" style={{width: "50%", paddingLeft: "30px", borderRadius: "30px", color: "white", paddingTop: "5px", paddingBottom: "5px", textAlign: "center"}}>{title}</h3>
       {/* Red underline */}
-      <div className="h-1 w-16 bg-brand-red rounded mb-6"></div>
+      <div className="h-1 w-16 bg-brand-red rounded mb-1"></div>
 
       <ul
         className={`${

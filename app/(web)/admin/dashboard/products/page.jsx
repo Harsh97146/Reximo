@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -5,13 +6,17 @@ import Image from "next/image";
 
 export default function AdminProductsWithModal() {
   const [products, setProducts] = useState([]);
-  const [form, setForm] = useState({ category: "" });
+  const [form, setForm] = useState({ category: [] });
   const [editingId, setEditingId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [files, setFiles] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const [datasheetFiles, setDatasheetFiles] = useState([]);
   const [datasheetPreviews, setDatasheetPreviews] = useState([]);
+  const [existingEndImages, setExistingEndImages] = useState([]);
+  const [existingDatasheets, setExistingDatasheets] = useState([]);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [categorySearch, setCategorySearch] = useState("");
 
   const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
   const API_URL = `${BASE_API_URL}/products`;
@@ -90,8 +95,21 @@ export default function AdminProductsWithModal() {
   };
 
   const handleRemoveImage = (index) => {
+    // Calculate how many are existing backend images vs new uploads
+    const existingCount = existingEndImages.length;
+
+    if (index < existingCount) {
+      // Removing an existing backend image
+      const updatedExisting = existingEndImages.filter((_, i) => i !== index);
+      setExistingEndImages(updatedExisting);
+    } else {
+      // Removing a newly uploaded file
+      const newFileIndex = index - existingCount;
+      setFiles((prev) => prev.filter((_, i) => i !== newFileIndex));
+    }
+
+    // Always update preview images
     setPreviewImages((prev) => prev.filter((_, i) => i !== index));
-    setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   // Datasheet file upload
@@ -105,7 +123,19 @@ export default function AdminProductsWithModal() {
   };
 
   const handleRemoveDatasheet = (index) => {
-    setDatasheetFiles((prev) => prev.filter((_, i) => i !== index));
+    const existingCount = existingDatasheets.length;
+
+    if (index < existingCount) {
+      // Removing an existing datasheet
+      const updatedExisting = existingDatasheets.filter((_, i) => i !== index);
+      setExistingDatasheets(updatedExisting);
+    } else {
+      // Removing a newly uploaded datasheet
+      const newFileIndex = index - existingCount;
+      setDatasheetFiles((prev) => prev.filter((_, i) => i !== newFileIndex));
+    }
+
+    // Always update preview
     setDatasheetPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
@@ -114,10 +144,11 @@ export default function AdminProductsWithModal() {
     try {
       const formData = new FormData();
       formData.append("name", form.name ?? "");
-      formData.append("category", form.category ?? "");
+      formData.append("category", Array.isArray(form.category) ? form.category.join(", ") : (form.category ?? ""));
       formData.append("otherData", form.otherData ?? "");
       formData.append("isFeatured", form.isFeatured ? "true" : "false");
 
+      // Array fields (REMOVED endImage from here)
       [
         "advantages",
         "application",
@@ -130,10 +161,10 @@ export default function AdminProductsWithModal() {
         "shelfLife",
         "colour",
         "coverage",
-        "endImage",
         "useBy",
         "howToApply",
         "description",
+        "keyFactors",
       ].forEach((key) => {
         if (form[key]) {
           form[key].forEach((item) => formData.append(key, item));
@@ -144,10 +175,17 @@ export default function AdminProductsWithModal() {
         formData.append("packingDetails", JSON.stringify(form.packingDetails));
       }
 
-      // Append image files
+      console.log(existingEndImages, "existingEndImages being sent");
+      console.log(existingDatasheets, "existingDatasheets being sent");
+
+      // Send retained images and datasheets
+      existingEndImages.forEach((url) => formData.append("endImage", url));
+      existingDatasheets.forEach((url) => formData.append("datasheet", url));
+
+      // Append new image files
       files.forEach((file) => formData.append("images", file));
 
-      // Append datasheet files
+      // Append new datasheet files
       datasheetFiles.forEach((file) => formData.append("datasheet", file));
 
       const url = editingId ? `${API_URL}/${editingId}` : API_URL;
@@ -161,11 +199,13 @@ export default function AdminProductsWithModal() {
       }
 
       // Reset form
-      setForm({ category: "", isFeatured: false });
+      setForm({ category: [], isFeatured: false });
       setFiles([]);
       setPreviewImages([]);
       setDatasheetFiles([]);
       setDatasheetPreviews([]);
+      setExistingEndImages([]);
+      setExistingDatasheets([]);
       setEditingId(null);
       setShowModal(false);
       await fetchProducts();
@@ -185,21 +225,34 @@ export default function AdminProductsWithModal() {
       }
     }
 
-    setForm({ ...product, packingDetails, category: product.category ?? "" });
+    // Exclude endImage, datasheet, and images from form object
+    const { endImage, datasheet, images, ...restOfProduct } = product;
+
+    setForm({
+      ...restOfProduct,
+      packingDetails,
+      category: Array.isArray(product.category)
+        ? product.category
+        : (product.category ? String(product.category).split(",").map((s) => s.trim()).filter(Boolean) : [])
+    });
     setEditingId(product._id);
     setShowModal(true);
 
-    const backendImages =
-      product.images?.map((img) => (img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`)) || [];
+    // Store the original backend images (raw paths as stored in DB)
+    setExistingEndImages(product.endImage || []);
 
-    const endImagePreviews =
-      product.endImage?.map((img) => (img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`)) || [];
+    // Create preview URLs for display
+    const endImagePreviews = (product.endImage || []).map((img) =>
+      img.startsWith("http") ? img : `${BASE_API_URL}${img.startsWith("/") ? img : `/${img}`}`
+    );
 
-    setPreviewImages([...backendImages, ...endImagePreviews]);
+    setPreviewImages(endImagePreviews);
+    setFiles([]); // Clear new files
 
-    // Optional: load existing datasheets if available
-    const existingDatasheets = product.datasheet || [];
-    setDatasheetPreviews(existingDatasheets.map((f) => f.split("/").pop()));
+    // Handle datasheets
+    const existingDatasheetsList = product.datasheet || [];
+    setExistingDatasheets(existingDatasheetsList);
+    setDatasheetPreviews(existingDatasheetsList.map((f) => f.split("/").pop()));
     setDatasheetFiles([]);
   };
 
@@ -222,7 +275,11 @@ export default function AdminProductsWithModal() {
 
   useEffect(() => {
     return () => {
-      previewImages.forEach((url) => URL.revokeObjectURL(url));
+      previewImages.forEach((url) => {
+        if (url.startsWith("blob:")) {
+          URL.revokeObjectURL(url);
+        }
+      });
     };
   }, [previewImages]);
 
@@ -234,11 +291,13 @@ export default function AdminProductsWithModal() {
         <button
           onClick={() => {
             setShowModal(true);
-            setForm({ category: "" });
+            setForm({ category: [] });
             setFiles([]);
             setPreviewImages([]);
             setDatasheetFiles([]);
             setDatasheetPreviews([]);
+            setExistingEndImages([]);
+            setExistingDatasheets([]);
             setEditingId(null);
           }}
           className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-md hover:bg-blue-700 transition-colors font-medium"
@@ -255,11 +314,13 @@ export default function AdminProductsWithModal() {
               <h2 className="text-lg sm:text-xl font-semibold">{editingId ? "Edit Product" : "Add Product"}</h2>
               <button
                 onClick={() => {
-                  setForm({ category: "" });
+                  setForm({ category: [] });
                   setFiles([]);
                   setPreviewImages([]);
                   setDatasheetFiles([]);
                   setDatasheetPreviews([]);
+                  setExistingEndImages([]);
+                  setExistingDatasheets([]);
                   setEditingId(null);
                   setShowModal(false);
                 }}
@@ -277,21 +338,86 @@ export default function AdminProductsWithModal() {
               className="border border-gray-300 p-2 sm:p-3 rounded-md w-full mb-4 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
-            {/* Category Dropdown */}
+            {/* Categories Multi-select */}
             <div className="mb-4">
-              <label className="block font-medium mb-1">Category</label>
-              <select
-                value={form.category ?? ""}
-                onChange={(e) => handleInputChange(e, "category")}
-                className="border p-2 rounded w-full"
-              >
-                <option value="">Select Category</option>
-                {categories.map((cat, i) => (
-                  <option key={i} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
+              <label className="block font-medium mb-1">Categories</label>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setCategoryOpen(!categoryOpen)}
+                  className="border border-gray-300 p-2 rounded w-full flex items-center justify-between"
+                >
+                  <div className="flex flex-wrap gap-2">
+                    {(form.category || []).length === 0 ? (
+                      <span className="text-gray-500">Select Categories</span>
+                    ) : (
+                      (form.category || []).map((cat) => (
+                        <span key={cat} className="bg-blue-50 text-blue-700 px-2 py-1 rounded-full text-sm flex items-center gap-1">
+                          {cat}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setForm((prev) => ({
+                                ...prev,
+                                category: (prev.category || []).filter((c) => c !== cat),
+                              }));
+                            }}
+                            className="text-blue-700 hover:text-blue-900"
+                            aria-label="Remove"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))
+                    )}
+                  </div>
+                  <span className="text-gray-500">▾</span>
+                </button>
+                {categoryOpen && (
+                  <div className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded shadow-lg p-2">
+                    <input
+                      type="text"
+                      value={categorySearch}
+                      onChange={(e) => setCategorySearch(e.target.value)}
+                      placeholder="Search..."
+                      className="w-full border border-gray-300 p-2 rounded mb-2"
+                    />
+                    <div className="max-h-40 overflow-auto space-y-1">
+                      {categories
+                        .filter((c) => c.toLowerCase().includes((categorySearch || "").toLowerCase()))
+                        .map((cat) => {
+                          const selected = (form.category || []).includes(cat);
+                          return (
+                            <label key={cat} className="flex items-center gap-2 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={selected}
+                                onChange={() =>
+                                  setForm((prev) => {
+                                    const set = new Set(prev.category || []);
+                                    if (set.has(cat)) set.delete(cat); else set.add(cat);
+                                    return { ...prev, category: Array.from(set) };
+                                  })
+                                }
+                              />
+                              <span className={selected ? "font-medium text-gray-900" : "text-gray-700"}>{cat}</span>
+                            </label>
+                          );
+                        })}
+                    </div>
+                    <div className="flex justify-end gap-2 mt-2">
+                      <button
+                        type="button"
+                        onClick={() => setCategoryOpen(false)}
+                        className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Packing Details */}
@@ -334,7 +460,7 @@ export default function AdminProductsWithModal() {
               </div>
               <button
                 onClick={addPackingDetail}
-                className="mt-3 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors text-sm font-medium"
+                className="mt-3 bg-[#3A9FA8] text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors text-sm font-medium"
               >
                 + Add Packing Detail
               </button>
@@ -356,6 +482,7 @@ export default function AdminProductsWithModal() {
               "colour",
               "storage",
               "shelfLife",
+              "keyFactors",
             ].map((key) => (
               <div key={key} className="mb-4">
                 <h3 className="font-semibold">{key}</h3>
@@ -375,7 +502,7 @@ export default function AdminProductsWithModal() {
                     </button>
                   </div>
                 ))}
-                <button onClick={() => addArrayField(key)} className="bg-green-500 text-white px-2 py-1 rounded mt-1">
+                <button onClick={() => addArrayField(key)} className="bg-[#3A9FA8] text-white px-2 py-1 rounded mt-1">
                   + Add {key}
                 </button>
               </div>
@@ -442,17 +569,19 @@ export default function AdminProductsWithModal() {
             <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-4 border-t">
               <button
                 onClick={handleAddOrUpdate}
-                className="flex-1 bg-green-600 text-white px-4 py-2 sm:py-3 rounded-md hover:bg-green-700 transition-colors font-medium"
+                className="flex-1 bg-[#3A9FA8] text-white px-4 py-2 sm:py-3 rounded-md hover:bg-green-700 transition-colors font-medium"
               >
                 {editingId ? "Update Product" : "Add Product"}
               </button>
               <button
                 onClick={() => {
-                  setForm({ category: "" });
+                  setForm({ category: [] });
                   setFiles([]);
                   setPreviewImages([]);
                   setDatasheetFiles([]);
                   setDatasheetPreviews([]);
+                  setExistingEndImages([]);
+                  setExistingDatasheets([]);
                   setEditingId(null);
                   setShowModal(false);
                 }}

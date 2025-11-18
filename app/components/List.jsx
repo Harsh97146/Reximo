@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ListItem from "./ListItem";
 import { Search, X, Grid3x3, List as ListIcon } from "lucide-react";
 
@@ -14,8 +15,13 @@ const List = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
 
+  const searchParams = useSearchParams();
+
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    const shouldScrollTop = typeof window !== "undefined" && window.location.hash !== "#product-list";
+    if (shouldScrollTop) {
+      window.scrollTo({ top: 0 });
+    }
 
     const fetchProducts = async () => {
       try {
@@ -32,6 +38,13 @@ const List = () => {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat && categories.includes(cat)) {
+      setSelectedCategory(cat);
+    }
+  }, [searchParams]);
 
   // Filter products based on search and category
   useEffect(() => {
@@ -82,7 +95,7 @@ const List = () => {
   }
 
   return (
-    <section className="py-8 sm:py-10 md:py-12 lg:py-16 xl:py-20 bg-gray-50">
+    <section id="product-list" className="py-8 sm:py-10 md:py-12 lg:py-16 xl:py-20 bg-gray-50">
       <div className="ct-container">
         {/* Search and Filter Bar */}
         <div className="mb-8 sm:mb-10 md:mb-12">

@@ -7,11 +7,6 @@ const ProductFirstSection = () => {
       <div className="ct-container">
         {/* Hero Section */}
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
-          <div className="inline-block mb-4 sm:mb-5">
-            <span className="text-xs sm:text-sm md:text-base font-semibold text-[var(--primary)] uppercase tracking-wider px-4 py-2 bg-blue-50 rounded-full">
-              Our Products
-            </span>
-          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 sm:mb-5 md:mb-6 leading-tight">
             Premium Construction
             <br className="hidden sm:block" />

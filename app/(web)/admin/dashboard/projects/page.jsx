@@ -219,7 +219,7 @@ const ProjectRoutes = () => {
               />
               <input
                 name="doneBy"
-                placeholder="Done By"
+                placeholder="Approved By"
                 value={formData.doneBy}
                 onChange={(e) =>
                   setFormData({ ...formData, doneBy: e.target.value })
@@ -297,7 +297,7 @@ const ProjectRoutes = () => {
 
               <button
                 type="submit"
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                className="bg-[#3A9FA8] text-white px-4 py-2 rounded hover:bg-green-600"
               >
                 {editingProject ? "Update Project" : "Save Project"}
               </button>

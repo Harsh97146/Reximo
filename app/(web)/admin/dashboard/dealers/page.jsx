@@ -125,7 +125,6 @@ export default function DealersManagement() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            required
             className="border border-gray-300 p-2 sm:p-3 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
           <input

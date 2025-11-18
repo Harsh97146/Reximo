@@ -67,7 +67,7 @@ const ProductGrid = () => {
                   {product.name}
                 </h3>
                 <span className="block text-sm sm:text-base md:text-lg font-normal text-[#595959] leading-relaxed">
-                  {product.description?.[0] || "Premium quality product from Rexino"}
+                  {product.description?.[0].substring(0, 100) || "Premium quality product from Rexino"}
                 </span>
               </div>
               <span
