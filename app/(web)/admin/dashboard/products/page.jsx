@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -6,7 +5,7 @@ import Image from "next/image";
 
 export default function AdminProductsWithModal() {
   const [products, setProducts] = useState([]);
-  const [form, setForm] = useState({ category: [] });
+  const [form, setForm] = useState({ category: [], order: 0 });
   const [editingId, setEditingId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [files, setFiles] = useState([]);
@@ -147,6 +146,7 @@ export default function AdminProductsWithModal() {
       formData.append("category", Array.isArray(form.category) ? form.category.join(", ") : (form.category ?? ""));
       formData.append("otherData", form.otherData ?? "");
       formData.append("isFeatured", form.isFeatured ? "true" : "false");
+      formData.append("order", form.order !== undefined ? String(form.order) : "0");
 
       // Array fields (REMOVED endImage from here)
       [
@@ -175,9 +175,6 @@ export default function AdminProductsWithModal() {
         formData.append("packingDetails", JSON.stringify(form.packingDetails));
       }
 
-      console.log(existingEndImages, "existingEndImages being sent");
-      console.log(existingDatasheets, "existingDatasheets being sent");
-
       // Send retained images and datasheets
       existingEndImages.forEach((url) => formData.append("endImage", url));
       existingDatasheets.forEach((url) => formData.append("datasheet", url));
@@ -199,7 +196,7 @@ export default function AdminProductsWithModal() {
       }
 
       // Reset form
-      setForm({ category: [], isFeatured: false });
+      setForm({ category: [], isFeatured: false, order: 0 });
       setFiles([]);
       setPreviewImages([]);
       setDatasheetFiles([]);
@@ -233,8 +230,21 @@ export default function AdminProductsWithModal() {
       packingDetails,
       category: Array.isArray(product.category)
         ? product.category
-        : (product.category ? String(product.category).split(",").map((s) => s.trim()).filter(Boolean) : [])
+        : (product.category ? String(product.category).split(",").map((s) => s.trim()).filter(Boolean) : []),
+      order: product.order !== undefined ? product.order : 0,
     });
+    {/* Order Field */ }
+    <div className="mb-4">
+      <label className="block font-medium mb-1">Order (Display Priority)</label>
+      <input
+        type="number"
+        value={form.order ?? 0}
+        onChange={(e) => setForm({ ...form, order: Number(e.target.value) })}
+        className="border border-gray-300 p-2 rounded-md w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        min={0}
+      />
+      <span className="text-xs text-gray-500">Lower numbers show first</span>
+    </div>
     setEditingId(product._id);
     setShowModal(true);
 
@@ -565,6 +575,19 @@ export default function AdminProductsWithModal() {
               </label>
             </div>
 
+            {/* Order Field */}
+            <div className="mb-4">
+              <label className="block font-medium mb-1">Order (Display Priority)</label>
+              <input
+                type="number"
+                value={form.order ?? 0}
+                onChange={(e) => setForm({ ...form, order: Number(e.target.value) })}
+                className="border border-gray-300 p-2 rounded-md w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                min={0}
+              />
+              <span className="text-xs text-gray-500">Lower numbers show first</span>
+            </div>
+
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-4 border-t">
               <button
@@ -600,6 +623,7 @@ export default function AdminProductsWithModal() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
                 <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
                 <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Other Data</th>
                 <th className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Packing Details</th>
@@ -617,6 +641,7 @@ export default function AdminProductsWithModal() {
               ) : (
                 products.map((p) => (
                   <tr key={p._id} className="hover:bg-gray-50">
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">{p.order ?? 0}</td>
                     <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{p.name}</td>
                     <td className="px-4 sm:px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{p.otherData || "-"}</td>
                     <td className="px-4 sm:px-6 py-4 text-sm text-gray-500">
