@@ -50,11 +50,16 @@ const List = () => {
   useEffect(() => {
     let filtered = products;
 
-    // Filter by category
+    // Filter by category (handle string or array categories safely)
     if (selectedCategory !== "All") {
-      filtered = filtered.filter(
-        (product) => product.category?.toLowerCase() === selectedCategory.toLowerCase()
-      );
+      const sel = selectedCategory.toLowerCase();
+      filtered = filtered.filter((product) => {
+        const cat = product.category;
+        if (Array.isArray(cat)) {
+          return cat.some((c) => String(c || "").toLowerCase() === sel);
+        }
+        return String(cat || "").toLowerCase() === sel;
+      });
     }
 
     // Filter by search query

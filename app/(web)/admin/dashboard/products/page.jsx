@@ -151,6 +151,7 @@ export default function AdminProductsWithModal() {
       // Array fields (REMOVED endImage from here)
       [
         "advantages",
+        "keyFactors",
         "application",
         "areasOfApplication",
         "methodOfApplication",
@@ -164,7 +165,6 @@ export default function AdminProductsWithModal() {
         "useBy",
         "howToApply",
         "description",
-        "keyFactors",
       ].forEach((key) => {
         if (form[key]) {
           form[key].forEach((item) => formData.append(key, item));
@@ -395,7 +395,10 @@ export default function AdminProductsWithModal() {
                     />
                     <div className="max-h-40 overflow-auto space-y-1">
                       {categories
-                        .filter((c) => c.toLowerCase().includes((categorySearch || "").toLowerCase()))
+                        .filter((c) =>
+                          typeof c === "string" &&
+                          c.toLowerCase().includes((categorySearch || "").toLowerCase())
+                        )
                         .map((cat) => {
                           const selected = (form.category || []).includes(cat);
                           return (

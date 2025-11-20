@@ -54,7 +54,7 @@ const AboutFirstSection = () => {
     {
       year: "2020s",
       title: "Leadership",
-      description: "Became a trusted leader in ceramic and construction chemicals across India.",
+      description: "Became a trusted leader in Tiles Adhesive , Waterproofing & all type Construction Chemicals across India.",
     },
   ];
 
@@ -75,7 +75,7 @@ const AboutFirstSection = () => {
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
             For over three decades, Rexino has been an integral part of homes, offices, and industries across India and beyond.
-            We are a trusted name in the ceramic and construction chemicals field, combining beauty with endurance and a legacy built on trust.
+            We are a trusted name in the Tiles Adhesive , Waterproofing & all type Construction Chemicals field, combining beauty with endurance and a legacy built on trust.
           </p>
         </div>
 
@@ -175,7 +175,7 @@ const AboutFirstSection = () => {
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Our Mission</h3>
             <p className="text-base sm:text-lg text-blue-100 leading-relaxed">
-              To deliver world-class ceramic and construction chemical solutions that combine beauty with endurance,
+              To deliver world-class Tiles Adhesive , Waterproofing & all type Construction Chemicals chemical solutions that combine beauty with endurance,
               helping our customers build lasting structures with confidence and reliability.
             </p>
           </div>
@@ -186,7 +186,7 @@ const AboutFirstSection = () => {
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Our Vision</h3>
             <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-              To be India's most trusted and innovative leader in ceramic and construction chemicals,
+              To be India's most trusted and innovative leader in Tiles Adhesive , Waterproofing & all type Construction Chemicals,
               setting new standards for quality, sustainability, and customer satisfaction.
             </p>
           </div>

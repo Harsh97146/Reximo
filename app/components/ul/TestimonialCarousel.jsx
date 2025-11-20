@@ -46,12 +46,13 @@ const TestimonialCarousel = () => {
         }}
       >
         {testimonials.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={`${item.name}-${index}`}>
             <div className="p-3 h-full relative z-0">
               <div className="bg-white sm:p-[30px] p-5 shadow-[0_0_20px_0_rgba(0,0,0,0.06)] rounded-2xl h-full min-h-[270px]">
                 <div className="flex items-center gap-1 mb-5">
                   {[...Array(5)].map((_, i) => (
                     <img
+                      key={i}
                       src="./img/home/star.png"
                       alt="star"
                       className="w-6 h-6"

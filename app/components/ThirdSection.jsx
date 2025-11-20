@@ -58,7 +58,7 @@ export default function ThirdSection() {
         </h2>
         <p className="text-center text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto mb-8 sm:mb-10 md:mb-12 px-4 leading-relaxed">
           Rexino has been an integral part of homes, offices, and industries for
-          over 30 years. A trusted name in ceramic and construction chemicals,
+          over 30 years. A trusted name in Tiles Adhesive , Waterproofing & all type Construction Chemicals,
           we deliver innovative solutions in Tile Fixing &amp; Care, Stone Care,
           Building Repair, Grouting, and Waterproofing. Our Non-Skid Adhesive
           (NSA) is revolutionizing tile-on-tile application in India. With a

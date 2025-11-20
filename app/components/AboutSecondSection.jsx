@@ -74,7 +74,7 @@ const AboutSecondSection = () => {
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
             For over three decades, Rexino has been shaping homes, offices, and industries with world-class 
-            ceramic and construction chemicals. Our core values guide everything we do.
+            Tiles Adhesive , Waterproofing & all type Construction Chemicals. Our core values guide everything we do.
           </p>
         </div>
 

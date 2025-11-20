@@ -13,7 +13,7 @@ const ProductFirstSection = () => {
             <span className="text-[var(--primary)]"> Chemical Solutions</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
-            Discover our comprehensive range of high-quality ceramic and construction chemicals,
+            Discover our comprehensive range of high-quality Tiles Adhesive , Waterproofing & all type Construction Chemicals,
             trusted by professionals for over three decades
           </p>
         </div>
@@ -48,7 +48,7 @@ const ProductFirstSection = () => {
               </h2>
               <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed">
                 For over three decades, <strong className="text-gray-900">Rexino</strong> has been a
-                trusted name in ceramic and construction chemicals. We deliver a
+                trusted name in Tiles Adhesive , Waterproofing & all type Construction Chemicals. We deliver a
                 wide range of solutions in{" "}
                 <strong className="text-gray-900">Tile & Stone Fixing, Building Repair, Grouting</strong>,
                 and <strong className="text-gray-900">Waterproofing</strong>.

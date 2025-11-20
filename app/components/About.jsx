@@ -38,7 +38,7 @@ const About = () => {
                     Rexino has been playing an integral role in your homes,
                     offices, and lives. It is a name synonymous with excellence
                     and reliability, with around 3 decades of experience in the
-                    ceramic and construction chemicals field.
+                    Tiles Adhesive , Waterproofing & all type Construction Chemicals field.
                   </p>
                 </div>
                 <CommonButton

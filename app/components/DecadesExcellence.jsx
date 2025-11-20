@@ -10,7 +10,7 @@ const DecadesExcellence = () => {
             Building Trust with <span className="text-[var(--primary)]">3 Decades of Excellence</span>
           </h1>
           <p className="block font-normal text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white text-center mb-8 sm:mb-12 md:mb-14 lg:mb-16 xl:mb-20 mx-auto max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-[1225px] w-full px-4 leading-relaxed">
-            Rexino has been an integral part of homes, offices, and industries for over 30 years. A trusted name in ceramic and construction chemicals, we deliver innovative solutions in Tile Fixing & Care, Stone Care, Building Repair, Grouting, and Waterproofing. Our Non-Skid Adhesive (NSA) is revolutionizing tile-on-tile application in India. With a strong focus on research, development, and a wide distribution network, Rexino continues to combine beauty with endurance—ensuring lasting results and peace of mind for homeowners, architects, and builders alike.
+            Rexino has been an integral part of homes, offices, and industries for over 30 years. A trusted name in Tiles Adhesive , Waterproofing & all type Construction Chemicals, we deliver innovative solutions in Tile Fixing & Care, Stone Care, Building Repair, Grouting, and Waterproofing. Our Non-Skid Adhesive (NSA) is revolutionizing tile-on-tile application in India. With a strong focus on research, development, and a wide distribution network, Rexino continues to combine beauty with endurance—ensuring lasting results and peace of mind for homeowners, architects, and builders alike.
           </p>
           <div className="flex items-center justify-center px-4">
             <CommonButton 

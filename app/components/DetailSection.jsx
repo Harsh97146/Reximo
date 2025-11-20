@@ -83,13 +83,13 @@ const DetailSection = ({ id }) => {
       {product.endImage && product.endImage.length > 0 && (
         <section className="max-w-3xl mx-auto px-4 my-10 py-20">
           <h3 className="flex items-center text-2xl font-semibold mb-3">
-            <span className="bg-[#3A9FA8]" style={{ width: "20%", paddingLeft: "10px", borderRadius: "30px", color: "white", paddingTop: "5px", paddingBottom: "5px", textAlign: "center" }}>Product:</span> <span className="ps-2">{product.name}</span>
+            <span className="bg-[#3A9FA8]" style={{ width: "20%", paddingLeft: "10px", borderRadius: "30px", color: "white", paddingTop: "5px", paddingBottom: "5px", textAlign: "center", objectFit: "contain" }}>Product:</span> <span className="ps-2">{product.name}</span>
           </h3>
           <div className="h-1 w-16 bg-brand-red rounded mb-6"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {product.endImage.map((img, idx) =>
               <div key={idx} className="relative w-full h-64 md:h-72 rounded-lg shadow-lg overflow-hidden">
-                <Image src={img} alt={`Product Image ${idx + 1}`} fill className="object-cover" />
+                <Image style={{ objectFit: "contain" }} src={img} alt={`Product Image ${idx + 1}`} fill className="object-cover" />
               </div>
             )}
           </div>

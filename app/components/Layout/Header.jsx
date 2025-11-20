@@ -41,7 +41,7 @@ export default function Header() {
             href="/"
             className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5 lg:gap-[10px] xl:gap-3"
           >
-            <div className="relative w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] md:w-[52px] md:h-[52px] lg:w-[58px] lg:h-[58px] xl:w-[64px] xl:h-[64px] 2xl:w-[72px] 2xl:h-[72px]">
+            <div className="relative flex flex-col justify-center items-center w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] md:w-[52px] md:h-[52px] lg:w-[58px] lg:h-[58px] xl:w-[64px] xl:h-[64px] 2xl:w-[72px] 2xl:h-[72px] ">
               <img
                 src="/img/logo.png"
                 alt="Rexino Logo"

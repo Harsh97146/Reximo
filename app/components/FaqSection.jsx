@@ -14,7 +14,7 @@ const FaqSection = () => {
     {
       question: "What is Rexino known for?",
       answer:
-        "Rexino is known for its strong legacy of over 3 decades in the ceramic and construction chemicals field, delivering high-quality products for homes, offices, and industrial utilities.",
+        "Rexino is known for its strong legacy of over 3 decades in the Tiles Adhesive , Waterproofing & all type Construction Chemicals field, delivering high-quality products for homes, offices, and industrial utilities.",
     },
     {
       question: "What types of products does Rexino offer?",
