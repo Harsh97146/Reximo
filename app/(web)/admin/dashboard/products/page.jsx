@@ -484,6 +484,7 @@ export default function AdminProductsWithModal() {
               "standards",
               "description",
               "advantages",
+              "keyFactors",
               "application",
               "areasOfApplication",
               "methodOfApplication",
@@ -495,7 +496,6 @@ export default function AdminProductsWithModal() {
               "colour",
               "storage",
               "shelfLife",
-              "keyFactors",
             ].map((key) => (
               <div key={key} className="mb-4">
                 <h3 className="font-semibold">{key}</h3>
