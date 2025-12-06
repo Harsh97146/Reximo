@@ -22,7 +22,7 @@ export const metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Rexino Chemical: Trusted Name in tiling, Waterproofing & construction chemicals",
+    title: "Rexino Chemical: 111 Trusted Name in tiling, Waterproofing & construction chemicals",
     description: "Rexino has over 3 decades of experience in the Tiles Adhesive , Waterproofing & all type Construction Chemicals field.",
     url: "https://rexinochemical.com",
     siteName: "Rexino Chemical",
