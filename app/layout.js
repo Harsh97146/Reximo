@@ -12,13 +12,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Rexino Chemical: 11 Trusted Name in tiling, Waterproofing & construction chemicals",
+  metadataBase: new URL("https://rexinochemical.com"),
+  title: "Rexino Chemical: Trusted Name in tiling, Waterproofing & construction chemicals",
   description:
     "Rexino has over 3 decades of experience in the Tiles Adhesive , Waterproofing & all type Construction Chemicals field, delivering a comprehensive range of Tile Fixing, Stone Fixing, Building Repair, Grouting Solutions, and Waterproofing products.",
   icons: {
-    icon: "https://www.rexinochemical.com/logo.png",
-    shortcut: "https://www.rexinochemical.com/logo.png",
-    apple: "https://www.rexinochemical.com/logo.png",
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "Rexino Chemical: Trusted Name in tiling, Waterproofing & construction chemicals",
+    description: "Rexino has over 3 decades of experience in the Tiles Adhesive , Waterproofing & all type Construction Chemicals field.",
+    url: "https://rexinochemical.com",
+    siteName: "Rexino Chemical",
+    images: [
+      {
+        url: "/logo.png",
+        width: 800,
+        height: 600,
+        alt: "Rexino Chemical Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rexino Chemical",
+    description: "Rexino has over 3 decades of experience in the Tiles Adhesive , Waterproofing & all type Construction Chemicals field.",
+    images: ["/logo.png"],
   },
 };
 
