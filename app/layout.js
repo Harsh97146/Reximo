@@ -16,9 +16,9 @@ export const metadata = {
   description:
     "Rexino has over 3 decades of experience in the Tiles Adhesive , Waterproofing & all type Construction Chemicals field, delivering a comprehensive range of Tile Fixing, Stone Fixing, Building Repair, Grouting Solutions, and Waterproofing products.",
   icons: {
-    icon: "img/logo.png",
-    shortcut: "img/logo.png",
-    apple: "img/logo.png",
+    icon: "https://www.rexinochemical.com/logo.png",
+    shortcut: "https://www.rexinochemical.com/logo.png",
+    apple: "https://www.rexinochemical.com/logo.png",
   },
 };
 
