@@ -56,9 +56,9 @@ const List = () => {
       filtered = filtered.filter((product) => {
         const cat = product.category;
         if (Array.isArray(cat)) {
-          return cat.some((c) => String(c || "").toLowerCase() === sel);
+          return cat.some((c) => String(c || "").toLowerCase().includes(sel));
         }
-        return String(cat || "").toLowerCase() === sel;
+        return String(cat || "").toLowerCase().includes(sel);
       });
     }
 
@@ -134,11 +134,10 @@ const List = () => {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 ${
-                    selectedCategory === category
-                      ? "bg-[var(--primary)] text-white shadow-md"
-                      : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
-                  }`}
+                  className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 ${selectedCategory === category
+                    ? "bg-[var(--primary)] text-white shadow-md"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                    }`}
                 >
                   {category}
                 </button>
@@ -149,22 +148,20 @@ const List = () => {
             <div className="flex items-center gap-2 bg-white rounded-xl p-1 border border-gray-200 shadow-sm">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-2 rounded-lg transition-all ${
-                  viewMode === "grid"
-                    ? "bg-[var(--primary)] text-white"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
+                className={`p-2 rounded-lg transition-all ${viewMode === "grid"
+                  ? "bg-[var(--primary)] text-white"
+                  : "text-gray-600 hover:bg-gray-100"
+                  }`}
                 aria-label="Grid view"
               >
                 <Grid3x3 className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-2 rounded-lg transition-all ${
-                  viewMode === "list"
-                    ? "bg-[var(--primary)] text-white"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
+                className={`p-2 rounded-lg transition-all ${viewMode === "list"
+                  ? "bg-[var(--primary)] text-white"
+                  : "text-gray-600 hover:bg-gray-100"
+                  }`}
                 aria-label="List view"
               >
                 <ListIcon className="w-4 h-4 sm:w-5 sm:h-5" />
