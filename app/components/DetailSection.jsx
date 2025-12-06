@@ -97,25 +97,27 @@ const DetailSection = ({ id }) => {
       )}
 
       {/* <div className="flex"> */}
-      {product.standards?.length > 0 && (
+      {(product.standards?.length > 0 || product.packingDetails?.length > 0) && (
         <section className="max-w-2xl mx-auto px-4 my-10">
           <div className="flex flex-col md:flex-row gap-10">
 
             {/* LEFT SIDE – Standards */}
-            <div className="w-full md:w-1/2">
-              <h3 className="flex items-center text-2xl font-semibold mb-3 -mt-3 bg-[#3A9FA8]" style={{ width: "50%", paddingLeft: "10px", borderRadius: "30px", color: "white", paddingTop: "5px", paddingBottom: "5px", textAlign: "center" }}>
-                Standards
-              </h3>
-              <div className="h-1 w-16 bg-brand-red rounded mb-3"></div>
+            {product.standards?.length > 0 && (
+              <div className="w-full md:w-1/2">
+                <h3 className="flex items-center text-2xl font-semibold mb-3 -mt-3 bg-[#3A9FA8]" style={{ width: "50%", paddingLeft: "10px", borderRadius: "30px", color: "white", paddingTop: "5px", paddingBottom: "5px", textAlign: "center" }}>
+                  Standards
+                </h3>
+                <div className="h-1 w-16 bg-brand-red rounded mb-3"></div>
 
-              <ul className="space-y-1">
-                {product.standards.map((standard, idx) => (
-                  <li key={idx} className="text-lg font-medium text-gray-700">
-                    {standard}
-                  </li>
-                ))}
-              </ul>
-            </div>
+                <ul className="space-y-1">
+                  {product.standards.map((standard, idx) => (
+                    <li key={idx} className="text-lg font-medium text-gray-700">
+                      {standard}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* RIGHT SIDE – Packaging */}
             {product.packingDetails?.length > 0 && (
