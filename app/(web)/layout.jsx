@@ -9,8 +9,9 @@ const WebLayout = ({ children }) => {
 
   const isBlogDetailPage = /^\/product\/[^/]+$/.test(pathname);
   const isAdminPage = pathname.startsWith('/admin');
+  const isDashboardPage = pathname.startsWith('/dashboard');
 
-  if (isAdminPage) {
+  if (isAdminPage || isDashboardPage) {
     return <>{children}</>;
   }
 

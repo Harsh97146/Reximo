@@ -8,6 +8,7 @@ import DecadesExcellence from "../components/DecadesExcellence";
 import HomeBlog from "../components/HomeBlog";
 import PopularEvents from "../components/OurGallery";
 import ProductCarousel from "../components/ProductCarousel";
+import BecomeDealer from "../components/BecomeDealer";
 
 
 const HomePage = () => {
@@ -20,6 +21,7 @@ const HomePage = () => {
       <DecadesExcellence />
       <PopularEvents/>
       <ProductCarousel/>
+      <BecomeDealer/>
       <HomeBlog/>
     </div>
   );

@@ -233,18 +233,6 @@ export default function AdminProductsWithModal() {
         : (product.category ? String(product.category).split(",").map((s) => s.trim()).filter(Boolean) : []),
       order: product.order !== undefined ? product.order : 0,
     });
-    {/* Order Field */ }
-    <div className="mb-4">
-      <label className="block font-medium mb-1">Order (Display Priority)</label>
-      <input
-        type="number"
-        value={form.order ?? 0}
-        onChange={(e) => setForm({ ...form, order: Number(e.target.value) })}
-        className="border border-gray-300 p-2 rounded-md w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        min={0}
-      />
-      <span className="text-xs text-gray-500">Lower numbers show first</span>
-    </div>
     setEditingId(product._id);
     setShowModal(true);
 
@@ -439,7 +427,7 @@ export default function AdminProductsWithModal() {
               <div className="space-y-3">
                 {(form.packingDetails || []).map((item, idx) => (
                   <div key={idx} className="border border-gray-200 rounded-lg p-3 sm:p-4 space-y-3">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                       <input
                         type="text"
                         placeholder="Packing (e.g. 1kg, 5L)"
@@ -449,7 +437,7 @@ export default function AdminProductsWithModal() {
                       />
                       <input
                         type="number"
-                        placeholder="Price"
+                        placeholder="Public Price"
                         value={item.price || ""}
                         onChange={(e) => handleInputChange(e, "packingDetails", idx, "price")}
                         className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -460,6 +448,34 @@ export default function AdminProductsWithModal() {
                         value={item.discountPrice || ""}
                         onChange={(e) => handleInputChange(e, "packingDetails", idx, "discountPrice")}
                         className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                       <input
+                        type="number"
+                        placeholder="BPL"
+                        value={item.bpl || ""}
+                        onChange={(e) => handleInputChange(e, "packingDetails", idx, "bpl")}
+                        className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                      />
+                      <input
+                        type="number"
+                        placeholder="MRP"
+                        value={item.mrp_price || ""}
+                        onChange={(e) => handleInputChange(e, "packingDetails", idx, "mrp_price")}
+                        className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                      />
+                      <input
+                        type="number"
+                        placeholder="Purchase Price"
+                        value={item.purchase_price || ""}
+                        onChange={(e) => handleInputChange(e, "packingDetails", idx, "purchase_price")}
+                        className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
+                      />
+                      <input
+                        type="number"
+                        placeholder="SELLING PRICE"
+                        value={item.selling_price || ""}
+                        onChange={(e) => handleInputChange(e, "packingDetails", idx, "selling_price")}
+                        className="border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-blue-50 border-blue-200"
                       />
                     </div>
                     <button

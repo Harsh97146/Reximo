@@ -4,47 +4,35 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useAuth } from "../../context/AuthContext";
 
-export default function AdminSidebar() {
+export default function UserSidebar() {
   const pathname = usePathname();
-  const { logout, user } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
     {
-      name: "Dashboard",
-      icon: "📊",
-      path: "/admin/dashboard",
-    },
-    {
-      name: "Blog",
-      icon: "📝",
-      path: "/admin/dashboard/blog",
-    },
-    {
-      name: "Projects",
-      icon: "🏗️",
-      path: "/admin/dashboard/projects",
-    },
-    {
       name: "Products",
       icon: "📦",
-      path: "/admin/dashboard/products",
+      path: "/dashboard",
     },
     {
-      name: "Dealers",
-      icon: "👥",
-      path: "/admin/dashboard/dealers",
-    },
-    {
-      name: "Users",
+      name: "My Profile",
       icon: "👤",
-      path: "/admin/dashboard/users",
+      path: "/dashboard/profile",
     },
   ];
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const getUserInfo = () => {
+    try {
+      const userStr = localStorage.getItem("user");
+      return userStr ? JSON.parse(userStr) : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const user = getUserInfo();
 
   return (
     <>
@@ -73,7 +61,7 @@ export default function AdminSidebar() {
               height={collapsed ? 40 : 40}
               className="h-auto"
             />
-            {!collapsed && <span className="ml-2 font-bold text-xl">Admin</span>}
+            {!collapsed && <span className="ml-2 font-bold text-xl">Dealer</span>}
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -114,17 +102,15 @@ export default function AdminSidebar() {
             <div className="px-4 py-3">
               <p className="text-sm text-gray-400">Logged in as</p>
               <p className="font-medium truncate">{user.name}</p>
+              {user.assignedCategory && (
+                <p className="text-xs text-blue-400 mt-1">
+                  {Array.isArray(user.assignedCategory) 
+                    ? user.assignedCategory.join(", ") 
+                    : user.assignedCategory}
+                </p>
+              )}
             </div>
           )}
-          <button
-            onClick={logout}
-            className={`flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 w-full ${
-              collapsed ? "justify-center" : ""
-            }`}
-          >
-            <span className="text-xl">🚪</span>
-            {!collapsed && <span className="ml-3">Logout</span>}
-          </button>
         </div>
       </div>
 
