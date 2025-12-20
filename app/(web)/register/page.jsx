@@ -173,7 +173,7 @@ const RegisterPage = () => {
     if (!formData.email) return showToast("error", "Please enter email first");
     setOtpSending(true);
     try {
-        const response = await fetch("http://localhost:8000/api/auth/send-otp", {
+        const response = await fetch("https://api.rexinochemical.com/api/auth/send-otp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: formData.email }),
