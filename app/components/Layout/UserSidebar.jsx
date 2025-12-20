@@ -17,6 +17,16 @@ export default function UserSidebar() {
       path: "/dashboard",
     },
     {
+      name: "My Rank",
+      icon: "👑",
+      path: "/dashboard/rank",
+    },
+    {
+      name: "Transactions",
+      icon: "📜",
+      path: "/dashboard/transactions",
+    },
+    {
       name: "My Profile",
       icon: "👤",
       path: "/dashboard/profile",

@@ -3,9 +3,29 @@
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../context/AuthContext";
 
+import { Crown } from "lucide-react";
+import { useEffect, useState } from "react";
+
 export default function Dashboard() {
   const router = useRouter();
   const { user } = useAuth();
+  const [stats, setStats] = useState([]);
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  const fetchStats = async () => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}/admin/stats`);
+        if (res.ok) {
+            const data = await res.json();
+            setStats(data);
+        }
+    } catch (e) {
+        console.error(e);
+    }
+  };
 
   const quickActions = [
     {
@@ -43,7 +63,31 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto space-y-8">
+      
+      {/* Stats Section */}
+      <div>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Dealer Insights</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+             {stats.map((stat, i) => (
+                 <div key={i} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center justify-center">
+                      <div className="bg-yellow-100 p-2 rounded-full mb-2">
+                        <Crown size={20} className="text-yellow-700" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-900">{stat.count}</h3>
+                      <p className="text-sm text-gray-500 font-medium">{stat.rank} Dealers</p>
+                 </div>
+             ))}
+             {stats.length === 0 && (
+                 <div className="col-span-full text-center py-8 text-gray-500 bg-white rounded-xl border border-dashed">
+                     No dealer stats available yet.
+                 </div>
+             )}
+        </div>
+      </div>
+
+
+      <div>
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Quick Actions</h1>
         <p className="text-sm sm:text-base text-gray-600 mt-2">Get started by creating new content or managing existing items</p>
@@ -68,6 +112,7 @@ export default function Dashboard() {
             </button>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );

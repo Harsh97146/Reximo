@@ -42,6 +42,16 @@ export default function AdminSidebar() {
       icon: "👤",
       path: "/admin/dashboard/users",
     },
+    {
+      name: "Authorized Persons",
+      icon: "👔",
+      path: "/admin/dashboard/authorized-persons",
+    },
+    {
+      name: "Ranks",
+      icon: "🏅",
+      path: "/admin/dashboard/ranks",
+    },
   ];
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

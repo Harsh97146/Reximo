@@ -2,24 +2,41 @@
 import React, { useState } from "react";
 import CommonButton from "../../components/ul/Button";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
-const InputField = ({ label, name, value, onChange, type = "text", required = false, placeholder, className = "" }) => (
-  <div className={`flex flex-col gap-1 ${className}`}>
-    <label htmlFor={name} className="text-sm font-medium text-gray-700">
-      {label} {required && <span className="text-red-500">*</span>}
-    </label>
-    <input
-      type={type}
-      id={name}
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      placeholder={placeholder}
-      className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all"
-    />
-  </div>
-);
+const InputField = ({ label, name, value, onChange, type = "text", required = false, placeholder, className = "" }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPassword = type === "password";
+
+  return (
+    <div className={`flex flex-col gap-1 ${className}`}>
+        <label htmlFor={name} className="text-sm font-medium text-gray-700">
+        {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        <div className="relative">
+            <input
+                type={isPassword ? (showPassword ? "text" : "password") : type}
+                id={name}
+                name={name}
+                value={value}
+                onChange={onChange}
+                required={required}
+                placeholder={placeholder}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all pr-12"
+            />
+            {isPassword && (
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+            )}
+        </div>
+    </div>
+  );
+};
 
 const LoginPage = () => {
   const router = useRouter();

@@ -141,6 +141,41 @@ const UsersPage = () => {
     }
   };
 
+  const [pointsModalOpen, setPointsModalOpen] = useState(false);
+  const [pointsUser, setPointsUser] = useState(null);
+  const [pointsData, setPointsData] = useState({ points: 0, type: 'add' });
+
+  const openPointsModal = (user) => {
+      setPointsUser(user);
+      setPointsData({ points: 0, type: 'add' });
+      setPointsModalOpen(true);
+  };
+
+  const handleUpdatePoints = async () => {
+      if(!pointsUser) return;
+      if(pointsData.points < 0) return Swal.fire('Error', 'Points cannot be negative', 'error');
+
+      try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}/admin/users/${pointsUser._id}/points`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(pointsData)
+          });
+          const data = await res.json();
+          if(res.ok) {
+              Swal.fire('Success', 'Points updated successfully', 'success');
+              setPointsModalOpen(false);
+              setPointsUser(null);
+              setRefreshKey(prev => prev + 1);
+          } else {
+              Swal.fire('Error', data.message || 'Failed to update points', 'error');
+          }
+      } catch (error) {
+          console.error(error);
+          Swal.fire('Error', 'Server error', 'error');
+      }
+  };
+
   const getStatusBadge = (user) => {
     if (user.isApproved) {
       return <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 flex items-center gap-1 w-fit"><CheckCircle size={12}/> Approved</span>;
@@ -153,7 +188,18 @@ const UsersPage = () => {
 
   const getImageUrl = (path) => {
     if (!path) return '';
-    return path.startsWith('http') ? path : `http://localhost:8000${path}`;
+    if (path.startsWith('http')) {
+        // Handle Google Drive links to ensure they load in img tags
+        if (path.includes('drive.google.com') && path.includes('id=')) {
+            const idMatch = path.match(/id=([^&]+)/);
+            if (idMatch && idMatch[1]) {
+                // Use the thumbnail endpoint which is often more reliable/permissive for embedding
+                return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
+            }
+        }
+        return path;
+    } 
+    return `http://localhost:8000${path}`;
   };
 
   return (
@@ -169,6 +215,7 @@ const UsersPage = () => {
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email/Mobile</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">State/City</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -181,7 +228,7 @@ const UsersPage = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       {user.documents?.liveImage && (
-                         <img src={getImageUrl(user.documents.liveImage)} alt="profile" className="h-8 w-8 rounded-full mr-3 object-cover border"/>
+                         <img src={getImageUrl(user.documents.liveImage)} referrerPolicy="no-referrer" alt="profile" className="h-8 w-8 rounded-full mr-3 object-cover border"/>
                       )}
                       <div className="text-sm font-medium text-gray-900">{user.name}</div>
                     </div>
@@ -189,6 +236,9 @@ const UsersPage = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{user.email}</div>
                     <div className="text-sm text-gray-500">{user.mobileNumber}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {user.category || "-"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{user.address?.state}</div>
@@ -224,6 +274,12 @@ const UsersPage = () => {
                             </button>
                         </>
                     )}
+                    <button
+                        onClick={() => openPointsModal(user)}
+                        className="text-purple-600 hover:text-purple-900" title="Manage Points"
+                    >
+                        <span className="font-bold border px-1 rounded text-xs">PTS</span>
+                    </button>
                     
                   </td>
                 </tr>
@@ -252,6 +308,7 @@ const UsersPage = () => {
                     <p><strong>Name:</strong> {selectedUser.name}</p>
                     <p><strong>Email:</strong> {selectedUser.email}</p>
                     <p><strong>Mobile:</strong> {selectedUser.mobileNumber}</p>
+                    <p><strong>Category:</strong> {selectedUser.category || "N/A"}</p>
                     <p><strong>Auth Person:</strong> {selectedUser.documents?.authorizedCompanyPerson}</p>
                 </div>
                 <div>
@@ -272,7 +329,7 @@ const UsersPage = () => {
                                <div key={key} className="border p-2 rounded">
                                    <p className="text-xs font-bold uppercase mb-2">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
                                    <a href={getImageUrl(value)} target="_blank" rel="noopener noreferrer">
-                                      <img src={getImageUrl(value)} alt={key} className="w-full h-32 object-cover rounded hover:opacity-75 transition-opacity"/>
+                                      <img src={getImageUrl(value)} referrerPolicy="no-referrer" alt={key} className="w-full h-32 object-cover rounded hover:opacity-75 transition-opacity"/>
                                    </a>
                                </div>
                            )
@@ -286,6 +343,53 @@ const UsersPage = () => {
           </div>
         </div>
       )}
+
+       {/* Points Modal */}
+      {pointsModalOpen && pointsUser && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6">
+                <h3 className="text-xl font-bold mb-4">Manage Points</h3>
+                <p className="mb-4 text-sm text-gray-600">User: <strong>{pointsUser.name}</strong> <br/> Current: {pointsUser.currentPoints || 0} pts ({pointsUser.currentRank || 'Bronze'})</p>
+                
+                <div className="mb-4">
+                    <label className="block text-sm font-medium mb-1">Action</label>
+                    <div className="flex gap-2">
+                         <button 
+                            type="button"
+                            onClick={() => setPointsData({...pointsData, type: 'add'})}
+                            className={`flex-1 py-2 rounded text-sm font-medium border ${pointsData.type === 'add' ? 'bg-green-100 border-green-500 text-green-700' : 'bg-gray-50 border-gray-200'}`}
+                         >
+                            Add (+)
+                         </button>
+                         <button 
+                            type="button"
+                            onClick={() => setPointsData({...pointsData, type: 'subtract'})}
+                            className={`flex-1 py-2 rounded text-sm font-medium border ${pointsData.type === 'subtract' ? 'bg-red-100 border-red-500 text-red-700' : 'bg-gray-50 border-gray-200'}`}
+                         >
+                            Subtract (-)
+                         </button>
+                    </div>
+                </div>
+
+                <div className="mb-6">
+                    <label className="block text-sm font-medium mb-1">Points</label>
+                    <input 
+                        type="number" 
+                        min="0"
+                        value={pointsData.points}
+                        onChange={(e) => setPointsData({...pointsData, points: parseInt(e.target.value) || 0})}
+                        className="w-full border rounded p-2"
+                    />
+                </div>
+
+                <div className="flex justify-end gap-3">
+                    <button onClick={() => setPointsModalOpen(false)} className="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                    <button onClick={handleUpdatePoints} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Update</button>
+                </div>
+            </div>
+        </div>
+      )}
+
     </div>
   );
 };

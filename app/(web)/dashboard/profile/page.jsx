@@ -79,52 +79,28 @@ const ProfilePage = () => {
     );
   }
 
+  const getDocumentUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith('http')) {
+        // Handle Google Drive links to ensure they load in img tags
+        if (url.includes('drive.google.com') && url.includes('id=')) {
+            const idMatch = url.match(/id=([^&]+)/);
+            if (idMatch && idMatch[1]) {
+                // Use the thumbnail endpoint which is often more reliable/permissive for embedding
+                return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
+            }
+        }
+        return url;
+    }
+    return `${BACKEND_URL}${url}`;
+  };
+
   const documents = [
-    { 
-      key: 'liveImage', 
-      label: 'Live Image', 
-      url: profile.documents?.liveImage 
-        ? (profile.documents.liveImage.startsWith('http') 
-            ? profile.documents.liveImage 
-            : `${BACKEND_URL}${profile.documents.liveImage}`)
-        : null
-    },
-    { 
-      key: 'adharCardFront', 
-      label: 'Aadhar Card (Front)', 
-      url: profile.documents?.adharCardFront 
-        ? (profile.documents.adharCardFront.startsWith('http') 
-            ? profile.documents.adharCardFront 
-            : `${BACKEND_URL}${profile.documents.adharCardFront}`)
-        : null
-    },
-    { 
-      key: 'adharCardBack', 
-      label: 'Aadhar Card (Back)', 
-      url: profile.documents?.adharCardBack 
-        ? (profile.documents.adharCardBack.startsWith('http') 
-            ? profile.documents.adharCardBack 
-            : `${BACKEND_URL}${profile.documents.adharCardBack}`)
-        : null
-    },
-    { 
-      key: 'panCard', 
-      label: 'PAN Card', 
-      url: profile.documents?.panCard 
-        ? (profile.documents.panCard.startsWith('http') 
-            ? profile.documents.panCard 
-            : `${BACKEND_URL}${profile.documents.panCard}`)
-        : null
-    },
-    { 
-      key: 'addressDoc', 
-      label: 'Address Proof', 
-      url: profile.documents?.addressDoc 
-        ? (profile.documents.addressDoc.startsWith('http') 
-            ? profile.documents.addressDoc 
-            : `${BACKEND_URL}${profile.documents.addressDoc}`)
-        : null
-    },
+    { key: 'liveImage', label: 'Live Image', url: getDocumentUrl(profile.documents?.liveImage) },
+    { key: 'adharCardFront', label: 'Aadhar Card (Front)', url: getDocumentUrl(profile.documents?.adharCardFront) },
+    { key: 'adharCardBack', label: 'Aadhar Card (Back)', url: getDocumentUrl(profile.documents?.adharCardBack) },
+    { key: 'panCard', label: 'PAN Card', url: getDocumentUrl(profile.documents?.panCard) },
+    { key: 'addressDoc', label: 'Address Proof', url: getDocumentUrl(profile.documents?.addressDoc) },
   ];
 
   console.log('Profile documents:', profile.documents);
@@ -273,6 +249,7 @@ const ProfilePage = () => {
                   <div className="relative h-48 bg-gray-100 rounded-lg overflow-hidden">
                     <img
                       src={doc.url}
+                      referrerPolicy="no-referrer"
                       alt={doc.label}
                       className="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => setPreviewImage({ url: doc.url, label: doc.label })}
@@ -331,6 +308,7 @@ const ProfilePage = () => {
             <div className="p-6 bg-gray-50">
               <img
                 src={previewImage.url}
+                referrerPolicy="no-referrer"
                 alt={previewImage.label}
                 className="max-w-full max-h-[70vh] mx-auto object-contain"
               />

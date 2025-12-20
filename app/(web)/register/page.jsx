@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import CommonButton from "../../components/ul/Button";
+import SearchableSelect from "../../components/SearchableSelect";
 import { useRouter } from "next/navigation";
-import { CheckCircle, XCircle, Check, X } from "lucide-react";
+import { CheckCircle, XCircle, Check, X, Eye, EyeOff } from "lucide-react";
 
 const InputField = ({ label, name, value, onChange, type = "text", required = false, placeholder, className = "" }) => (
   <div className={`flex flex-col gap-1 ${className}`}>
@@ -104,7 +105,22 @@ const RegisterPage = () => {
     pincode: "",
     country: "India",
     authorizedCompanyPerson: "",
+    category: "",
   });
+
+  const categoryOptions = [
+    "Rcc Contractor",
+    "Waterproofing Contractor",
+    "Stone Applicator",
+    "Architect",
+    "Party",
+    "plumber",
+    "PMC",
+    "Dealer",
+    "Builder",
+    "Engineer",
+    "Parches Department"
+  ].map(c => ({ _id: c, name: c }));
 
   const [files, setFiles] = useState({
     liveImage: null,
@@ -113,6 +129,23 @@ const RegisterPage = () => {
     panCard: null,
     addressDoc: null,
   });
+
+  const [authorizedPersons, setAuthorizedPersons] = useState([]);
+
+  useEffect(() => {
+    const fetchAuthorizedPersons = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}/authorized-persons`);
+        if (res.ok) {
+          const data = await res.json();
+          setAuthorizedPersons(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch authorized persons", error);
+      }
+    };
+    fetchAuthorizedPersons();
+  }, []);
 
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ type: "", text: "", visible: false });
@@ -126,6 +159,7 @@ const RegisterPage = () => {
     hasNumber: false,
     hasSpecialChar: false
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const showToast = (type, text) => {
     setToast({ type, text, visible: true });
@@ -245,6 +279,7 @@ const RegisterPage = () => {
             pincode: "",
             country: "India",
             authorizedCompanyPerson: "",
+            category: "",
             otp: ""
         });
         setFiles({
@@ -338,18 +373,27 @@ const RegisterPage = () => {
                   <label htmlFor="password" className="text-sm font-medium text-gray-700">
                     Password <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    onFocus={() => setPasswordFocused(true)}
-                    onBlur={() => setPasswordFocused(false)}
-                    required
-                    placeholder="••••••••"
-                    className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all"
-                  />
+                  <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        onFocus={() => setPasswordFocused(true)}
+                        onBlur={() => setPasswordFocused(false)}
+                        required
+                        placeholder="••••••••"
+                        className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all pr-12"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                      >
+                         {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                  </div>
                   
                   {/* Password Requirements */}
                   {(passwordFocused || formData.password) && (
@@ -411,7 +455,8 @@ const RegisterPage = () => {
                   )}
                 </div>
                 
-                <InputField label="Authorized Company Person" name="authorizedCompanyPerson" value={formData.authorizedCompanyPerson} onChange={handleChange} required placeholder="Name of auth person" />
+
+                <SearchableSelect label="Category" name="category" value={formData.category} onChange={handleChange} options={categoryOptions} required placeholder="Select Category" />
               </div>
             </section>
 
@@ -438,6 +483,7 @@ const RegisterPage = () => {
                 <FileInput label="Aadhar Card Back" name="adharCardBack" file={files.adharCardBack} onChange={handleFileChange} required />
                 <FileInput label="PAN Card" name="panCard" file={files.panCard} onChange={handleFileChange} required />
                 <FileInput label="Address Proof Document" name="addressDoc" file={files.addressDoc} onChange={handleFileChange} required />
+                <SearchableSelect label="Authorized Company Person" name="authorizedCompanyPerson" value={formData.authorizedCompanyPerson} onChange={handleChange} options={authorizedPersons} required placeholder="Name of auth person" />
               </div>
             </section>
 
