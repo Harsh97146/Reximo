@@ -16,7 +16,7 @@ const UsersPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/admin/users");
+      const response = await fetch(`$(process.env.NEXT_PUBLIC_API_URL)/admin/users");
       const data = await response.json();
       if (Array.isArray(data)) {
         setUsers(data);
