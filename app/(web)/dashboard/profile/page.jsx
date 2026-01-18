@@ -262,10 +262,10 @@ const ProfilePage = () => {
                         console.log(`Successfully loaded: ${doc.label}`, doc.url);
                       }}
                     />
-                    <div className="absolute inset-0 bg-red-50 hidden items-center justify-center flex-col p-4">
-                      <p className="text-red-600 text-sm text-center">Failed to load image</p>
-                      <p className="text-xs text-gray-500 mt-2 break-all">{doc.url}</p>
-                    </div>
+                      <div className="absolute inset-0 bg-gray-50 hidden items-center justify-center flex-col p-4 text-gray-400">
+                        <FileText size={48} className="mb-2 opacity-50" />
+                        <p className="text-sm font-medium">Image not found</p>
+                      </div>
                   </div>
                 </div>
               ))}

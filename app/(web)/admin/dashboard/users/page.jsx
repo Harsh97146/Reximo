@@ -1,13 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CommonButton from "../../../../components/ul/Button";
-import { CheckCircle, XCircle, Eye, FileText, X } from "lucide-react";
+import { CheckCircle, XCircle, Eye, FileText, X, Edit } from "lucide-react";
 import Swal from "sweetalert2";
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null); // For viewing details
+  const [editingUser, setEditingUser] = useState(null); // For editing details
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
@@ -16,7 +17,7 @@ const UsersPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(`$(process.env.NEXT_PUBLIC_API_URL)/admin/users");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users`);
       const data = await response.json();
       if (Array.isArray(data)) {
         setUsers(data);
@@ -141,6 +142,48 @@ const UsersPage = () => {
     }
   };
 
+  const handleEditClick = (user) => {
+    setEditingUser({ ...user, address: user.address || {} });
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    if (name.startsWith('address.')) {
+      const field = name.split('.')[1];
+      setEditingUser(prev => ({
+        ...prev,
+        address: { ...prev.address, [field]: value }
+      }));
+    } else {
+      setEditingUser(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSaveUser = async () => {
+    if (!editingUser) return;
+    
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users/${editingUser._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editingUser),
+      });
+      
+      const data = await response.json();
+
+      if (response.ok) {
+        Swal.fire('Success', 'User updated successfully', 'success');
+        setEditingUser(null);
+        setRefreshKey((prev) => prev + 1);
+      } else {
+        Swal.fire('Error', data.message || 'Failed to update user', 'error');
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      Swal.fire('Error', 'Something went wrong.', 'error');
+    }
+  };
+
   const [pointsModalOpen, setPointsModalOpen] = useState(false);
   const [pointsUser, setPointsUser] = useState(null);
   const [pointsData, setPointsData] = useState({ points: 0, type: 'add' });
@@ -258,6 +301,12 @@ const UsersPage = () => {
                     >
                       <Eye size={18}/>
                     </button>
+                    <button 
+                      onClick={() => handleEditClick(user)}
+                      className="text-indigo-600 hover:text-indigo-900" title="Edit User"
+                    >
+                      <Edit size={18}/>
+                    </button>
                     {!user.isApproved && !user.rejectionReason && (
                         <>
                             <button 
@@ -340,6 +389,161 @@ const UsersPage = () => {
              <div className="p-6 border-t flex justify-end gap-3">
                  <button onClick={() => setSelectedUser(null)} className="px-4 py-2 border rounded hover:bg-gray-50">Close</button>
              </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit User Modal */}
+      {editingUser && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-6 border-b">
+              <h3 className="text-xl font-bold">Edit User</h3>
+              <button onClick={() => setEditingUser(null)}><X size={24}/></button>
+            </div>
+            
+            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Personal Info */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-gray-700 border-b pb-2">Personal Information</h4>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={editingUser.name || ''}
+                    onChange={handleEditChange}
+                    className="w-full border rounded p-2"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={editingUser.email || ''}
+                    onChange={handleEditChange}
+                    className="w-full border rounded p-2"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Mobile</label>
+                  <input
+                    type="text"
+                    name="mobileNumber"
+                    value={editingUser.mobileNumber || ''}
+                    onChange={handleEditChange}
+                    className="w-full border rounded p-2"
+                  />
+                </div>
+
+                <div>
+                   <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                   <select 
+                      name="category" 
+                      value={editingUser.category || ''} 
+                      onChange={handleEditChange}
+                      className="w-full border rounded p-2"
+                   >
+                     <option value="">Select Category</option>
+                     {categories.map((cat) => (
+                       <option key={cat} value={cat}>{cat}</option>
+                     ))}
+                   </select>
+                </div>
+              </div>
+
+              {/* Address Info */}
+              <div className="space-y-4">
+                <h4 className="font-semibold text-gray-700 border-b pb-2">Address Details</h4>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address Line 1</label>
+                  <input
+                    type="text"
+                    name="address.line1"
+                    value={editingUser.address?.line1 || ''}
+                    onChange={handleEditChange}
+                    className="w-full border rounded p-2"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
+                  <input
+                    type="text"
+                    name="address.line2"
+                    value={editingUser.address?.line2 || ''}
+                    onChange={handleEditChange}
+                    className="w-full border rounded p-2"
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <input
+                      type="text"
+                      name="address.city"
+                      value={editingUser.address?.city || ''}
+                      onChange={handleEditChange}
+                      className="w-full border rounded p-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                    <input
+                      type="text"
+                      name="address.state"
+                      value={editingUser.address?.state || ''}
+                      onChange={handleEditChange}
+                      className="w-full border rounded p-2"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                   <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
+                    <input
+                      type="text"
+                      name="address.pincode"
+                      value={editingUser.address?.pincode || ''}
+                      onChange={handleEditChange}
+                      className="w-full border rounded p-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                    <input
+                      type="text"
+                      name="address.country"
+                      value={editingUser.address?.country || ''}
+                      onChange={handleEditChange}
+                      className="w-full border rounded p-2"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t flex justify-end gap-3">
+              <button 
+                onClick={() => setEditingUser(null)} 
+                className="px-4 py-2 border rounded hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleSaveUser}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Save Changes
+              </button>
+            </div>
           </div>
         </div>
       )}

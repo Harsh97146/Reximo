@@ -112,19 +112,33 @@ const DealerDashboard = () => {
                       onClick={() => router.push(`/dashboard/products/${product._id}`)}
                   >
                       {/* Image Section */}
-                      <div className="w-full md:w-1/4 h-64 md:h-auto relative bg-gray-50">
-                           {product.images && product.images.length > 0 ? (
-                              <Image 
-                                  src={product.images[0].startsWith("http") ? product.images[0] : `http://localhost:8000${product.images[0]}`} 
-                                  alt={product.name}
-                                  fill
-                                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                              />
-                           ) : (
-                              <div className="flex items-center justify-center h-full text-gray-400">
-                                  <Package size={40} />
-                              </div>
-                           )}
+                      <div className="w-full md:w-1/4 h-64 md:h-auto relative bg-gray-50 flex items-center justify-center p-4">
+                           {(() => {
+                               let imagePath = null;
+                               if (product.images && product.images.length > 0) imagePath = product.images[0];
+                               else if (product.endImage && product.endImage.length > 0) imagePath = product.endImage[0];
+                               else if (product.image) imagePath = product.image;
+
+                               if (imagePath) {
+                                   const imageUrl = imagePath.startsWith("http") 
+                                       ? imagePath 
+                                       : `${process.env.NEXT_PUBLIC_API_URL ? process.env.NEXT_PUBLIC_API_URL.replace('/api', '') : 'http://localhost:8000'}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+                                   
+                                   return (
+                                       <Image 
+                                           src={imageUrl} 
+                                           alt={product.name}
+                                           fill
+                                           className="object-contain p-2 transition-transform duration-500 group-hover:scale-110"
+                                       />
+                                   );
+                               }
+                               return (
+                                   <div className="flex items-center justify-center h-full text-gray-400">
+                                       <Package size={40} />
+                                   </div>
+                               );
+                           })()}
                       </div>
 
                       {/* Content Section */}
